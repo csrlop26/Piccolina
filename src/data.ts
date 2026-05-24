@@ -1,8 +1,8 @@
 import { PizzaItem, ReviewItem } from './types';
-import margheritaImg from './assets/pizzas/margherita.jpg';
-import pepperoniImg from './assets/pizzas/pepperoni.jpg';
-import carbonaraImg from './assets/pizzas/carbonara.jpg';
-import veganaImg from './assets/pizzas/vegana.png';
+import margheritaImg from './assets/pizzas/margherita_ai.png';
+import pepperoniImg from './assets/pizzas/pepperoni_ai.png';
+import carbonaraImg from './assets/pizzas/carbonara_ai.png';
+import veganaImg from './assets/pizzas/vegana_ai.png';
 
 export const PIZZA_MENU: PizzaItem[] = [
   {
