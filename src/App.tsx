@@ -156,7 +156,7 @@ export default function App() {
               <img
                 src={IMAGES_RESOURCES.heroPizza}
                 alt="Pizza de Horno de Leña"
-                className="w-[85vw] max-w-[550px] relative drop-shadow-[0_25px_25px_rgba(170,48,27,0.25)] select-none hover:rotate-3 transition-transform duration-500 cursor-grab active:cursor-grabbing"
+                className="w-[85vw] max-w-[550px] relative drop-shadow-[0_25px_25px_rgba(170,48,27,0.25)] select-none hover:rotate-3 transition-transform duration-500 cursor-grab active:cursor-grabbing rounded-full"
                 referrerPolicy="no-referrer"
               />
               {/* Custom Red Oval Silhouette */}
@@ -293,7 +293,7 @@ export default function App() {
                     <img
                       src={pizza.image}
                       alt={pizza.name}
-                      className="w-36 h-36 object-contain group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 hover:cursor-zoom-in"
+                      className="w-36 h-36 object-contain group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 hover:cursor-zoom-in rounded-full"
                       onClick={() => setSelectedPizzaToCustomize(pizza)}
                       referrerPolicy="no-referrer"
                     />
