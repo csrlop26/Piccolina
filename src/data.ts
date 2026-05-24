@@ -6,7 +6,7 @@ export const PIZZA_MENU: PizzaItem[] = [
     name: 'Margherita',
     description: 'Tomate San Marzano, mozzarella di bufala, albahaca fresca y AOVE.',
     price: 12.50,
-    image: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=800&auto=format&fit=crop',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/f/f4/Pizza.png',
     label: 'VEGGIE',
     defaultIngredients: ['Tomate San Marzano', 'Mozzarella di bufala', 'Albahaca fresca', 'AOVE']
   },
@@ -15,7 +15,7 @@ export const PIZZA_MENU: PizzaItem[] = [
     name: 'Pepperoni',
     description: 'Pepperoni artesanal ahumado, mozzarella, miel picante y orégano.',
     price: 14.00,
-    image: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?w=800&auto=format&fit=crop',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/4/42/Pizza_Quattro_Stagioni_transparent.png',
     bestSeller: true,
     defaultIngredients: ['Pepperoni artesanal ahumado', 'Mozzarella', 'Miel picante', 'Orégano']
   },
@@ -24,7 +24,7 @@ export const PIZZA_MENU: PizzaItem[] = [
     name: 'Carbonara',
     description: 'Base blanca de pecorino romano, guanciale crujiente y pimienta negra.',
     price: 15.50,
-    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&auto=format&fit=crop',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/5/5f/Spinach_pizza.png',
     defaultIngredients: ['Base de pecorino romano', 'Guanciale crujiente', 'Yema de huevo', 'Pimienta negra']
   },
   {
@@ -32,7 +32,7 @@ export const PIZZA_MENU: PizzaItem[] = [
     name: 'Vegana',
     description: 'Pimientos asados, cebolla caramelizada, champiñones y queso vegano.',
     price: 13.50,
-    image: 'https://images.unsplash.com/photo-1585238342024-78d387f4a707?w=800&auto=format&fit=crop',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/f/f4/Pizza.png',
     label: 'VEGAN',
     defaultIngredients: ['Pimientos asados', 'Cebolla caramelizada', 'Champiñones', 'Queso vegano artesanal']
   }
@@ -83,7 +83,7 @@ export const REVIEWS_DATA: ReviewItem[] = [
 ];
 
 export const IMAGES_RESOURCES = {
-  heroPizza: 'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=800&auto=format&fit=crop',
-  storyPepperoni: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?w=800&auto=format&fit=crop',
+  heroPizza: 'https://upload.wikimedia.org/wikipedia/commons/4/42/Pizza_Quattro_Stagioni_transparent.png',
+  storyPepperoni: 'https://upload.wikimedia.org/wikipedia/commons/4/42/Pizza_Quattro_Stagioni_transparent.png',
   chefCut: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCM8KweoU8iyd8mZtFXCDalactmbY6iYeXN5jkF8UYMoY-a3pqXqStjhYSJwSR7BrOiPjcvQsZ_3GcUmJ1B9M_VjrfhQZ4ejzHFEy76WC2QM8HrA8Q8WmcaceGrnKX63OXIt_K5eawaaBIIYw9-R0SutKBN_NeUscWqovpnxsQVFpYy2AmyTOaFLdZVX9088XgOvqYayWZoQZ3-DKRwBFUk3KEe2bQ0H24-CXQTO1drkT61S0i_QPfI2i7lrPOgnyrSM7RKgSIVT0s'
 };
