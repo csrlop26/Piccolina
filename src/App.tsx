@@ -156,7 +156,8 @@ export default function App() {
               <img
                 src={IMAGES_RESOURCES.heroPizza}
                 alt="Pizza de Horno de Leña"
-                className="w-[85vw] max-w-[550px] relative drop-shadow-[0_25px_25px_rgba(170,48,27,0.25)] select-none hover:rotate-3 transition-transform duration-500 cursor-grab active:cursor-grabbing rounded-full"
+                className="w-[85vw] max-w-[550px] relative drop-shadow-[0_25px_25px_rgba(170,48,27,0.25)] select-none hover:rotate-3 transition-transform duration-500 cursor-grab active:cursor-grabbing"
+                style={{ clipPath: 'circle(44% at 50% 50%)' }}
                 referrerPolicy="no-referrer"
               />
               {/* Custom Red Oval Silhouette */}
@@ -243,7 +244,8 @@ export default function App() {
                 <img
                   src={IMAGES_RESOURCES.storyPepperoni}
                   alt="Pepperoni artesanal"
-                  className="w-full object-contain bg-surface-low rounded-sm border border-on-surface/5"
+                  className="w-full object-cover rounded-sm border border-on-surface/5"
+                  style={{ clipPath: 'circle(46% at 50% 50%)' }}
                   referrerPolicy="no-referrer"
                 />
                 <div className="pt-4 text-center">
@@ -293,7 +295,8 @@ export default function App() {
                     <img
                       src={pizza.image}
                       alt={pizza.name}
-                      className="w-36 h-36 object-contain group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 hover:cursor-zoom-in rounded-full"
+                      className="w-40 h-40 object-cover group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 hover:cursor-zoom-in"
+                      style={{ clipPath: 'circle(44% at 50% 50%)' }}
                       onClick={() => setSelectedPizzaToCustomize(pizza)}
                       referrerPolicy="no-referrer"
                     />
@@ -410,6 +413,7 @@ export default function App() {
                   src={IMAGES_RESOURCES.heroPizza}
                   alt="Pizza slice helper artwork"
                   className="absolute top-0 left-1/2 -translate-x-1/2 w-28 -mt-8 drop-shadow-md select-none pointer-events-none"
+                  style={{ clipPath: 'circle(44% at 50% 50%)' }}
                   referrerPolicy="no-referrer"
                 />
               </div>

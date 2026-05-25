@@ -125,7 +125,8 @@ export default function PizzaCart({ isOpen, onClose, cartItems, onUpdateQuantity
                       <img
                         src={item.pizza.image}
                         alt={item.pizza.name}
-                        className="w-16 h-16 object-contain flex-shrink-0"
+                        className="w-16 h-16 object-cover flex-shrink-0"
+                        style={{ clipPath: 'circle(46% at 50% 50%)' }}
                         referrerPolicy="no-referrer"
                       />
                       <div className="flex-1 min-w-0 pr-6">
