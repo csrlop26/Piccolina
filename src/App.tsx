@@ -140,21 +140,32 @@ export default function App() {
         {/* Section A: Hero */}
         <section className="relative min-h-screen flex flex-col bg-background overflow-hidden">
 
-          {/* Giant typographic background layer — sits behind everything */}
-          <div className="absolute inset-x-0 top-1/2 -translate-y-[55%] pointer-events-none select-none z-0 px-2 text-center">
+          {/* Giant text — stretches horizontally from center on load */}
+          <motion.div
+            className="absolute inset-x-0 top-1/2 -translate-y-[55%] pointer-events-none select-none z-0 px-2 text-center"
+            style={{ transformOrigin: 'center center' }}
+            initial={{ scaleX: 0.38, opacity: 0 }}
+            animate={{ scaleX: 1, opacity: 1 }}
+            transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1] }}
+          >
             <h1
               className="font-display font-black text-on-surface uppercase leading-[0.88] tracking-tighter"
               style={{ fontSize: 'clamp(46px, 13.5vw, 200px)' }}
             >
               PICCOLI<span style={{ color: '#e8563a' }}>N</span>A
             </h1>
-          </div>
+          </motion.div>
 
           {/* Floating pizza zone */}
           <div className="relative z-10 flex-1 flex flex-col items-center justify-center pt-24 pb-32">
 
-            {/* Rotating amber badge — top-left of pizza */}
-            <div className="absolute top-[14%] left-4 md:left-16 z-20">
+            {/* Rotating amber badge — appears after text */}
+            <motion.div
+              className="absolute top-[14%] left-4 md:left-16 z-20"
+              initial={{ opacity: 0, scale: 0.5, rotate: -30 }}
+              animate={{ opacity: 1, scale: 1, rotate: 0 }}
+              transition={{ duration: 0.7, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
+            >
               <div className="relative w-[6.5rem] h-[6.5rem] animate-spin-slow">
                 <svg className="w-full h-full" viewBox="0 0 100 100">
                   <path d="M 50,50 m -37,0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="transparent" id="heroBadge" />
@@ -167,30 +178,41 @@ export default function App() {
                 </svg>
                 <div className="absolute inset-0 flex items-center justify-center text-xl select-none">🍕</div>
               </div>
-            </div>
+            </motion.div>
 
-            {/* Scattered basil leaf accents */}
-            <div className="absolute bottom-[22%] left-[8%] text-2xl select-none pointer-events-none rotate-12 opacity-80">🌿</div>
-            <div className="absolute bottom-[18%] right-[8%] text-xl select-none pointer-events-none -rotate-12 opacity-80">🌿</div>
-
-            {/* Pizza + coral disc */}
+            {/* Basil leaves — scattered, delayed */}
             <motion.div
-              initial={{ opacity: 0, y: 28, scale: 0.9 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 1.0, ease: [0.22, 1, 0.36, 1] }}
-              className="relative flex items-center justify-center"
-            >
-              {/* Coral circular plate */}
-              <div
+              className="absolute bottom-[22%] left-[7%] text-2xl select-none pointer-events-none"
+              initial={{ opacity: 0, x: -20, rotate: 25 }}
+              animate={{ opacity: 0.85, x: 0, rotate: 12 }}
+              transition={{ duration: 0.8, delay: 1.1, ease: 'easeOut' }}
+            >🌿</motion.div>
+            <motion.div
+              className="absolute bottom-[18%] right-[7%] text-xl select-none pointer-events-none"
+              initial={{ opacity: 0, x: 20, rotate: -25 }}
+              animate={{ opacity: 0.85, x: 0, rotate: -12 }}
+              transition={{ duration: 0.8, delay: 1.2, ease: 'easeOut' }}
+            >🌿</motion.div>
+
+            {/* Pizza rising from below — main hero element */}
+            <div className="relative flex items-center justify-center">
+
+              {/* Coral oval plate — wider than pizza, sits slightly low */}
+              <motion.div
                 className="absolute rounded-full"
                 style={{
-                  width: 'clamp(190px, 38vw, 500px)',
-                  height: 'clamp(190px, 38vw, 500px)',
+                  width: 'clamp(300px, 58vw, 740px)',
+                  height: 'clamp(210px, 40vw, 520px)',
                   backgroundColor: '#e8563a',
+                  bottom: '-4%',
                 }}
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.7, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
               />
-              {/* Pizza image */}
-              <img
+
+              {/* Pizza: rises from below with slight rotation, like levitating */}
+              <motion.img
                 src={IMAGES_RESOURCES.heroPizza}
                 alt="Pizza artesanal de horno de leña"
                 className="relative z-10 select-none"
@@ -199,15 +221,23 @@ export default function App() {
                   height: 'clamp(220px, 43vw, 560px)',
                   objectFit: 'cover',
                   clipPath: 'circle(46% at 50% 50%)',
-                  filter: 'drop-shadow(0 24px 40px rgba(0,0,0,0.18))',
+                  filter: 'drop-shadow(0 28px 44px rgba(0,0,0,0.2))',
                 }}
+                initial={{ opacity: 0, y: 120, rotate: -14, scale: 0.85 }}
+                animate={{ opacity: 1, y: 0, rotate: 0, scale: 1 }}
+                transition={{ duration: 1.1, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
                 referrerPolicy="no-referrer"
               />
-            </motion.div>
+            </div>
           </div>
 
-          {/* Bottom info strip */}
-          <div className="absolute bottom-0 inset-x-0 z-10 px-6 md:px-10 pb-8 flex justify-between items-end">
+          {/* Bottom info — slides up last */}
+          <motion.div
+            className="absolute bottom-0 inset-x-0 z-10 px-6 md:px-10 pb-8 flex justify-between items-end"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 1.0 }}
+          >
             <div>
               <p className="font-display font-black text-[9px] text-primary tracking-[0.18em] uppercase mb-1.5">
                 Massa Madre · 48h Fermentación
@@ -230,7 +260,7 @@ export default function App() {
                 Reservar
               </button>
             </div>
-          </div>
+          </motion.div>
 
         </section>
 
