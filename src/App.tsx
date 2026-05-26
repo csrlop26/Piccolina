@@ -138,79 +138,107 @@ export default function App() {
 
       <main>
         {/* Section A: Hero */}
-        <section className="relative min-h-[90vh] flex flex-col items-center justify-center pt-16 px-6 overflow-visible">
-          {/* Huge typography alignment */}
-          <h1 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-display text-[15vw] leading-none text-on-surface select-none pointer-events-none z-0 tracking-tighter opacity-10 font-extrabold text-center select-none">
-            LA PICCOLINA
-          </h1>
+        <section className="relative min-h-screen flex flex-col bg-background overflow-hidden">
 
-          {/* Central responsive pizza showcase container */}
-          <div className="relative z-10 flex flex-col items-center">
-            {/* Ambient Pizza Floating Image */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9, rotate: -5 }}
-              animate={{ opacity: 1, scale: 1, rotate: 0 }}
-              transition={{ duration: 1.2, ease: 'easeOut' }}
-              className="relative"
+          {/* Giant typographic background layer — sits behind everything */}
+          <div className="absolute inset-x-0 top-1/2 -translate-y-[55%] pointer-events-none select-none z-0 px-2 text-center">
+            <h1
+              className="font-display font-black text-on-surface uppercase leading-[0.88] tracking-tighter"
+              style={{ fontSize: 'clamp(46px, 13.5vw, 200px)' }}
             >
-              <img
-                src={IMAGES_RESOURCES.heroPizza}
-                alt="Pizza de Horno de Leña"
-                className="w-[85vw] max-w-[550px] relative drop-shadow-[0_25px_25px_rgba(170,48,27,0.25)] select-none hover:rotate-3 transition-transform duration-500 cursor-grab active:cursor-grabbing"
-                style={{ clipPath: 'circle(44% at 50% 50%)' }}
-                referrerPolicy="no-referrer"
-              />
-              {/* Custom Red Oval Silhouette */}
-              <div className="oval-shadow -mt-8 mx-auto" aria-hidden="true" />
-            </motion.div>
-
-            {/* Micro floating organic illustration nodes */}
-            <div className="absolute top-6 -left-12 opacity-85 hover:scale-115 transition-transform duration-300">
-              <span className="bg-white/90 p-3 rounded-full border border-on-surface flex items-center justify-center text-primary rotate-12">
-                <Flame className="w-5 h-5 text-[#aa301b]" />
-              </span>
-            </div>
-            <div className="absolute top-1/3 -right-8 opacity-90 hover:scale-115 transition-transform duration-300">
-              <span className="bg-white/90 p-2.5 rounded-full border border-on-surface flex items-center justify-center text-secondary-container -rotate-12">
-                <Sparkles className="w-4 h-4 text-[#7e5700]" />
-              </span>
-            </div>
+              PICCOLI<span style={{ color: '#e8563a' }}>N</span>A
+            </h1>
           </div>
 
-          {/* Spinning badge overlay graphic */}
-          <div className="absolute top-1/4 left-6 md:left-24 z-20">
-            <div className="relative w-36 h-36 md:w-48 md:h-48 animate-spin-slow">
-              <svg className="w-full h-full" viewBox="0 0 100 100">
-                <path d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="transparent" id="circlePath" />
-                <circle className="fill-secondary-container stroke-[#111111] stroke-[1.5px]" cx="50" cy="50" r="38" />
-                <text className="text-[7.5px] font-bold tracking-[0.22em] fill-on-secondary-fixed uppercase">
-                  <textpath xlinkHref="#circlePath">
-                    • GRAB A SLICE • HORNO DE LEÑA • REAL SOURDOUGH • VESUVIO •
-                  </textpath>
-                </text>
-              </svg>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Flame className="w-6 h-6 text-primary animate-pulse" />
+          {/* Floating pizza zone */}
+          <div className="relative z-10 flex-1 flex flex-col items-center justify-center pt-24 pb-32">
+
+            {/* Rotating amber badge — top-left of pizza */}
+            <div className="absolute top-[14%] left-4 md:left-16 z-20">
+              <div className="relative w-[6.5rem] h-[6.5rem] animate-spin-slow">
+                <svg className="w-full h-full" viewBox="0 0 100 100">
+                  <path d="M 50,50 m -37,0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="transparent" id="heroBadge" />
+                  <circle fill="#f4a340" cx="50" cy="50" r="38" />
+                  <text style={{ fontSize: '6.5px', fontWeight: 700, letterSpacing: '0.2em', fill: '#2d3922', textTransform: 'uppercase' }}>
+                    <textPath xlinkHref="#heroBadge">
+                      • TAKE A SLICE • HORNO DE LEÑA • SOURDOUGH •
+                    </textPath>
+                  </text>
+                </svg>
+                <div className="absolute inset-0 flex items-center justify-center text-xl select-none">🍕</div>
               </div>
             </div>
+
+            {/* Scattered basil leaf accents */}
+            <div className="absolute bottom-[22%] left-[8%] text-2xl select-none pointer-events-none rotate-12 opacity-80">🌿</div>
+            <div className="absolute bottom-[18%] right-[8%] text-xl select-none pointer-events-none -rotate-12 opacity-80">🌿</div>
+
+            {/* Pizza + coral disc */}
+            <motion.div
+              initial={{ opacity: 0, y: 28, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 1.0, ease: [0.22, 1, 0.36, 1] }}
+              className="relative flex items-center justify-center"
+            >
+              {/* Coral circular plate */}
+              <div
+                className="absolute rounded-full"
+                style={{
+                  width: 'clamp(190px, 38vw, 500px)',
+                  height: 'clamp(190px, 38vw, 500px)',
+                  backgroundColor: '#e8563a',
+                }}
+              />
+              {/* Pizza image */}
+              <img
+                src={IMAGES_RESOURCES.heroPizza}
+                alt="Pizza artesanal de horno de leña"
+                className="relative z-10 select-none"
+                style={{
+                  width: 'clamp(220px, 43vw, 560px)',
+                  height: 'clamp(220px, 43vw, 560px)',
+                  objectFit: 'cover',
+                  clipPath: 'circle(46% at 50% 50%)',
+                  filter: 'drop-shadow(0 24px 40px rgba(0,0,0,0.18))',
+                }}
+                referrerPolicy="no-referrer"
+              />
+            </motion.div>
           </div>
 
-          {/* Slogan Text Header block */}
-          <div className="mt-8 text-center z-10 max-w-2xl px-4 space-y-4">
-            <p className="font-display font-extrabold text-[#aa301b] text-base md:text-lg tracking-[0.15em] uppercase leading-none">
-              Massa Madre • 48h Fermentación
-            </p>
-            <p className="font-display font-bold text-lg md:text-xl text-on-surface-variant max-w-xl mx-auto leading-relaxed">
-              Donde la arquitectura del sabor se encuentra con la tradición italiana. Sin adornos, solo pizza real.
-            </p>
+          {/* Bottom info strip */}
+          <div className="absolute bottom-0 inset-x-0 z-10 px-6 md:px-10 pb-8 flex justify-between items-end">
+            <div>
+              <p className="font-display font-black text-[9px] text-primary tracking-[0.18em] uppercase mb-1.5">
+                Massa Madre · 48h Fermentación
+              </p>
+              <p className="font-sans text-on-surface/60 text-sm font-medium leading-snug">
+                Sabor real. Born, Barcelona.
+              </p>
+            </div>
+            <div className="hidden md:flex items-center gap-3">
+              <button
+                onClick={() => { startTransition(() => { setIsCartOpen(true); }); }}
+                className="bg-secondary-container text-on-secondary-container px-6 py-2.5 rounded-full font-display font-black text-[10px] tracking-widest uppercase hover:opacity-90 transition-opacity"
+              >
+                Pedir Ahora
+              </button>
+              <button
+                onClick={() => openReservation('general')}
+                className="pill-border text-on-surface px-6 py-2.5 font-display font-black text-[10px] tracking-widest uppercase hover:bg-on-surface hover:text-background transition-colors"
+              >
+                Reservar
+              </button>
+            </div>
           </div>
+
         </section>
 
         {/* Section C: Nuestra Storia */}
         <section className="relative py-20" id="storia">
           {/* Two-tone high contrast background splitting */}
           <div className="absolute top-0 left-0 w-full h-1/2 bg-background border-b border-on-surface" />
-          <div className="absolute bottom-0 left-0 w-full h-1/2 bg-[#aa301b]" />
+          <div className="absolute bottom-0 left-0 w-full h-1/2 bg-primary" />
 
           <div className="relative z-10 px-6 md:px-12 max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12">
             
@@ -263,7 +291,7 @@ export default function App() {
           
           <div className="flex flex-col sm:flex-row items-center sm:justify-between gap-4 mb-16 border-b border-on-surface pb-6">
             <div className="flex items-center gap-3">
-              <span className="p-2.5 bg-[#aa301b] text-white rounded-xl brutalist-border shadow-sm flex items-center justify-center">
+              <span className="p-2.5 bg-primary text-white rounded-xl brutalist-border shadow-sm flex items-center justify-center">
                 <Flame className="w-6 h-6" />
               </span>
               <h2 className="font-display font-extrabold text-3xl md:text-4xl text-on-surface uppercase tracking-tight">
@@ -284,7 +312,7 @@ export default function App() {
               >
                 {/* Decorative sticker badge */}
                 {pizza.bestSeller && (
-                  <div className="absolute -top-3.5 -right-3.5 z-10 bg-[#aa301b] text-white py-1 px-3 text-center rotate-12 brutalist-border text-[10px] font-black tracking-widest leading-none shadow-sm uppercase">
+                  <div className="absolute -top-3.5 -right-3.5 z-10 bg-primary text-white py-1 px-3 text-center rotate-12 brutalist-border text-[10px] font-black tracking-widest leading-none shadow-sm uppercase">
                     MÁS VENDIDA
                   </div>
                 )}
@@ -318,7 +346,7 @@ export default function App() {
                     </h3>
                     {pizza.label && (
                       <span className={`text-[9px] font-mono tracking-wider font-extrabold px-2 py-0.5 rounded-sm brutalist-border ${
-                        pizza.label === 'VEGGIE' ? 'bg-[#febe49] text-[#714e00]' : 'bg-on-surface text-background'
+                        pizza.label === 'VEGGIE' ? 'bg-secondary-container text-on-secondary-container' : 'bg-on-surface text-background'
                       }`}>
                         {pizza.label}
                       </span>
@@ -347,7 +375,7 @@ export default function App() {
         </section>
 
         {/* Section E: Split block - Comparte Sin Prisas */}
-        <section className="flex flex-col lg:flex-row bg-[#aa301b] border-b border-on-surface">
+        <section className="flex flex-col lg:flex-row bg-primary border-b border-on-surface">
           {/* Slicing visual chef side */}
           <div className="w-full lg:w-1/2 relative min-h-[350px] md:min-h-[480px]">
             <img
@@ -495,7 +523,7 @@ export default function App() {
               initial={{ scale: 0.95, opacity: 0, y: 15 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.95, opacity: 0, y: 15 }}
-              className="relative bg-[#fcf9f3] w-full max-w-xl brutalist-border brutalist-shadow rounded-none p-6 md:p-8 z-10"
+              className="relative bg-surface-lowest w-full max-w-xl brutalist-border brutalist-shadow rounded-none p-6 md:p-8 z-10"
             >
               <button
                 onClick={() => setIsManifestoOpen(false)}
@@ -506,7 +534,7 @@ export default function App() {
 
               <div className="space-y-6 pt-4 font-semibold text-sm">
                 <div className="text-center">
-                  <span className="text-[#aa301b] font-mono text-xs tracking-widest uppercase">[ NUESTRO COMPROMISO ]</span>
+                  <span className="text-primary font-mono text-xs tracking-widest uppercase">[ NUESTRO COMPROMISO ]</span>
                   <h3 className="font-display font-black text-2xl md:text-3xl uppercase text-on-surface mt-1">
                     EL MANIFIESTO PICCOLINA
                   </h3>
@@ -576,7 +604,7 @@ export default function App() {
               </p>
 
               {/* Physical style receipt print block summary */}
-              <div className="w-full bg-[#fcf9f3] p-4 border border-on-surface/50 font-mono text-xs space-y-3 relative mb-6">
+              <div className="w-full bg-surface-lowest p-4 border border-on-surface/50 font-mono text-xs space-y-3 relative mb-6">
                 <div className="text-center pb-2 border-b border-dashed border-on-surface/20">
                   <p className="font-display font-black text-xs uppercase text-on-surface">LA PICCOLINA S.L.</p>
                   <p className="text-[10px] text-on-surface-variant">BARCELONA • PEDIDO Nº {activeReceipt.id}</p>
@@ -692,7 +720,7 @@ export default function App() {
                   </div>
                   
                   <span className="absolute bottom-2 left-2 text-[9px] text-on-surface-variant font-bold uppercase">Carrer de la Princesa / Born</span>
-                  <span className="absolute top-2 right-2 text-[9px] text-[#714e00] bg-secondary-container px-1 py-0.5 rounded-sm">M: Jaume I</span>
+                  <span className="absolute top-2 right-2 text-[9px] text-on-secondary-container bg-secondary-container px-1 py-0.5 rounded-sm">M: Jaume I</span>
                 </div>
 
                 {/* Directions Info list */}
