@@ -1,6 +1,0 @@
-{
-  "name": "La Piccolina",
-  "description": "Una web interactiva y sofisticada para la Pizzería Artesanal La Piccolina, de estilo neo-brutalista, que incluye pedidos, personalización de pizzas y reservas.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
