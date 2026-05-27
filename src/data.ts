@@ -1,8 +1,9 @@
 import { PizzaItem, ReviewItem } from './types';
-import margheritaImg from './assets/pizzas/margherita_ai.png';
-import pepperoniImg from './assets/pizzas/pepperoni_ai.png';
-import carbonaraImg from './assets/pizzas/carbonara_ai.png';
-import veganaImg from './assets/pizzas/vegana_ai.png';
+import margheritaImg from './assets/pizzas/margherita_real.png';
+import pepperoniImg from './assets/pizzas/pepperoni_real.png';
+import carbonaraImg from './assets/pizzas/carbonara_real.png';
+import veganaImg from './assets/pizzas/vegana_real.png';
+import chefImg from './assets/chef_real.png';
 
 export const PIZZA_MENU: PizzaItem[] = [
   {
@@ -89,5 +90,5 @@ export const REVIEWS_DATA: ReviewItem[] = [
 export const IMAGES_RESOURCES = {
   heroPizza: pepperoniImg,
   storyPepperoni: pepperoniImg,
-  chefCut: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCM8KweoU8iyd8mZtFXCDalactmbY6iYeXN5jkF8UYMoY-a3pqXqStjhYSJwSR7BrOiPjcvQsZ_3GcUmJ1B9M_VjrfhQZ4ejzHFEy76WC2QM8HrA8Q8WmcaceGrnKX63OXIt_K5eawaaBIIYw9-R0SutKBN_NeUscWqovpnxsQVFpYy2AmyTOaFLdZVX9088XgOvqYayWZoQZ3-DKRwBFUk3KEe2bQ0H24-CXQTO1drkT61S0i_QPfI2i7lrPOgnyrSM7RKgSIVT0s'
+  chefCut: chefImg
 };

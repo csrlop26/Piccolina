@@ -140,13 +140,12 @@ export default function App() {
         {/* Section A: Hero */}
         <section className="relative min-h-screen flex flex-col bg-background overflow-hidden">
 
-          {/* Giant text — stretches horizontally from center on load */}
+          {/* BACKGROUND TEXT: Huge bold "PICCOLINA" perfectly centered */}
           <motion.div
-            className="absolute inset-x-0 top-1/2 -translate-y-[55%] pointer-events-none select-none z-0 px-2 text-center"
-            style={{ transformOrigin: 'center center' }}
-            initial={{ scaleX: 0.38, opacity: 0 }}
-            animate={{ scaleX: 1, opacity: 1 }}
-            transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute inset-0 flex items-center justify-center select-none pointer-events-none z-0"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.1, ease: 'easeOut' }}
           >
             <h1
               className="font-display font-black text-on-surface uppercase leading-[0.88] tracking-tighter"
@@ -156,12 +155,12 @@ export default function App() {
             </h1>
           </motion.div>
 
-          {/* Floating pizza zone */}
-          <div className="relative z-10 flex-1 flex flex-col items-center justify-center pt-24 pb-32">
-
-            {/* Rotating amber badge — appears after text */}
+          {/* Floating pizza zone perfectly overlapping the text */}
+          <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
+            
+            {/* Rotating amber badge */}
             <motion.div
-              className="absolute top-[14%] left-4 md:left-16 z-20"
+              className="absolute top-[14%] left-4 md:left-16 z-20 pointer-events-auto"
               initial={{ opacity: 0, scale: 0.5, rotate: -30 }}
               animate={{ opacity: 1, scale: 1, rotate: 0 }}
               transition={{ duration: 0.7, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
@@ -180,48 +179,47 @@ export default function App() {
               </div>
             </motion.div>
 
-            {/* Basil leaves — scattered, delayed */}
+            {/* Basil leaves */}
             <motion.div
-              className="absolute bottom-[22%] left-[7%] text-2xl select-none pointer-events-none"
+              className="absolute bottom-[22%] left-[7%] text-2xl select-none"
               initial={{ opacity: 0, x: -20, rotate: 25 }}
               animate={{ opacity: 0.85, x: 0, rotate: 12 }}
               transition={{ duration: 0.8, delay: 1.1, ease: 'easeOut' }}
             >🌿</motion.div>
             <motion.div
-              className="absolute bottom-[18%] right-[7%] text-xl select-none pointer-events-none"
+              className="absolute bottom-[18%] right-[7%] text-xl select-none"
               initial={{ opacity: 0, x: 20, rotate: -25 }}
               animate={{ opacity: 0.85, x: 0, rotate: -12 }}
               transition={{ duration: 0.8, delay: 1.2, ease: 'easeOut' }}
             >🌿</motion.div>
 
-            {/* Pizza rising from below — main hero element */}
-            <div className="relative flex items-center justify-center">
-
-              {/* Coral oval plate — wider than pizza, sits slightly low */}
+            {/* Coral oval plate & Pizza Wrapper */}
+            <div className="relative flex items-center justify-center w-full h-full pointer-events-auto">
+              
+              {/* Coral oval plate perfectly centered behind pizza */}
               <motion.div
                 className="absolute rounded-full"
                 style={{
                   width: 'clamp(300px, 58vw, 740px)',
-                  height: 'clamp(210px, 40vw, 520px)',
+                  height: 'clamp(300px, 58vw, 740px)', // Made perfectly circular
                   backgroundColor: '#e8563a',
-                  bottom: '-4%',
                 }}
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.7, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
               />
 
-              {/* Pizza: rises from below with slight rotation, like levitating */}
+              {/* Pizza */}
               <motion.img
                 src={IMAGES_RESOURCES.heroPizza}
                 alt="Pizza artesanal de horno de leña"
                 className="relative z-10 select-none"
                 style={{
-                  width: 'clamp(220px, 43vw, 560px)',
-                  height: 'clamp(220px, 43vw, 560px)',
+                  width: 'clamp(280px, 54vw, 700px)', // Made slightly smaller than the coral circle
+                  height: 'clamp(280px, 54vw, 700px)',
                   objectFit: 'cover',
-                  clipPath: 'circle(46% at 50% 50%)',
-                  filter: 'drop-shadow(0 28px 44px rgba(0,0,0,0.2))',
+                  clipPath: 'circle(48% at 50% 50%)', // Tightened circle crop to hide original background perfectly
+                  filter: 'drop-shadow(0 28px 44px rgba(0,0,0,0.25))',
                 }}
                 initial={{ opacity: 0, y: 120, rotate: -14, scale: 0.85 }}
                 animate={{ opacity: 1, y: 0, rotate: 0, scale: 1 }}
@@ -461,17 +459,26 @@ export default function App() {
               {/* Back ambient red shadow element */}
               <div className="oval-shadow absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 scale-150 opacity-10" />
               
-              <div className="relative z-10 transform -rotate-12 hover:rotate-0 transition-transform duration-500 flex items-center justify-center">
-                <svg className="text-primary" fill="none" height="150" viewBox="0 0 24 24" width="150" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 2L3 12H12V22L21 12H12V2Z" fill="currentColor" stroke="#111111" strokeWidth="0.5"></path>
-                  <circle cx="12" cy="12" fill="#111111" r="1.5"></circle>
-                </svg>
+              <div className="relative z-10 flex items-center justify-center">
+                
+                {/* Rotating badge replacing triangles */}
+                <div className="absolute inset-0 flex items-center justify-center animate-spin-slow">
+                  <svg className="w-[180px] h-[180px]" viewBox="0 0 100 100">
+                    <path d="M 50,50 m -42,0 a 42,42 0 1,1 84,0 a 42,42 0 1,1 -84,0" fill="transparent" id="footerBadge" />
+                    <text style={{ fontSize: '7.5px', fontWeight: 900, letterSpacing: '0.15em', fill: '#e8563a', textTransform: 'uppercase' }}>
+                      <textPath xlinkHref="#footerBadge">
+                        • 100% ARTESANAL • HORNO DE LEÑA
+                      </textPath>
+                    </text>
+                  </svg>
+                </div>
+
                 {/* Embedded absolute mini-image slice */}
                 <img
                   src={IMAGES_RESOURCES.heroPizza}
                   alt="Pizza slice helper artwork"
-                  className="absolute top-0 left-1/2 -translate-x-1/2 w-28 -mt-8 drop-shadow-md select-none pointer-events-none"
-                  style={{ clipPath: 'circle(44% at 50% 50%)' }}
+                  className="w-32 drop-shadow-md select-none pointer-events-none relative z-10"
+                  style={{ clipPath: 'circle(48% at 50% 50%)' }}
                   referrerPolicy="no-referrer"
                 />
               </div>
