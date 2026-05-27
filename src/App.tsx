@@ -142,7 +142,7 @@ export default function App() {
 
           {/* BACKGROUND TEXT: Huge bold "PICCOLINA" perfectly centered */}
           <motion.div
-            className="absolute inset-0 flex items-center justify-center select-none pointer-events-none z-0"
+            className="absolute inset-0 flex items-center justify-center select-none pointer-events-none z-30"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.1, ease: 'easeOut' }}
@@ -301,7 +301,7 @@ export default function App() {
                   src={IMAGES_RESOURCES.storyPepperoni}
                   alt="Pepperoni artesanal"
                   className="w-full object-cover rounded-sm border border-on-surface/5"
-                  style={{ clipPath: 'circle(46% at 50% 50%)' }}
+                  style={{ clipPath: 'circle(48% at 50% 50%)' }}
                   referrerPolicy="no-referrer"
                 />
                 <div className="pt-4 text-center">

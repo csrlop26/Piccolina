@@ -122,13 +122,15 @@ export default function PizzaCart({ isOpen, onClose, cartItems, onUpdateQuantity
                       key={item.cartId}
                       className="p-4 bg-white brutalist-border flex gap-4 items-start relative hover:shadow-sm transition-shadow"
                     >
-                      <img
-                        src={item.pizza.image}
-                        alt={item.pizza.name}
-                        className="w-16 h-16 object-cover flex-shrink-0"
-                        style={{ clipPath: 'circle(46% at 50% 50%)' }}
-                        referrerPolicy="no-referrer"
-                      />
+                      <div className="w-16 h-16 shrink-0">
+                        <img
+                          src={item.pizza.image}
+                          alt={item.pizza.name}
+                          className="w-full h-full object-cover drop-shadow-md"
+                          style={{ clipPath: 'circle(48% at 50% 50%)' }}
+                          referrerPolicy="no-referrer"
+                        />
+                      </div>
                       <div className="flex-1 min-w-0 pr-6">
                         <h4 className="font-display font-black text-base text-on-surface uppercase tracking-tight leading-none mb-1">
                           {item.pizza.name}

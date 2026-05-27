@@ -95,3 +95,11 @@
   opacity: 0.45;
   border-radius: 100%;
 }
+
+img[src*='margherita_real'], 
+img[src*='pepperoni_real'], 
+img[src*='carbonara_real'], 
+img[src*='vegana_real'], 
+img[src*='pizza'] { 
+  clip-path: circle(48% at 50% 50%); 
+}

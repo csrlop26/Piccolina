@@ -39,7 +39,7 @@ export default function TimelapseHero({ isActive, isAutoplay, onComplete }: { is
 
         {/* BACKGROUND TEXT: Huge bold "PICCOLINA" perfectly centered */}
         <motion.div
-          className={`absolute inset-0 flex items-center justify-center select-none pointer-events-none z-0 transition-opacity duration-[1500ms] ${
+          className={`absolute inset-0 flex items-center justify-center select-none pointer-events-none z-30 transition-opacity duration-[1500ms] ${
             step >= 2 ? 'opacity-100' : 'opacity-0'
           }`}
         >
