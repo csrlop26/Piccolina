@@ -126,7 +126,7 @@ export default function TimelapseHero({ isActive, isAutoplay, onComplete }: { is
         </div>
 
         {/* Helper overlay hidden when finished */}
-        {step < 15 && (
+        {step < 15 && !isAutoplay && (
           <div className="absolute top-2 left-2 text-[10px] font-mono text-gray-400 opacity-50 select-none pointer-events-none z-50">
             TIMELAPSE MODE [HERO] - STEP {step}/15 - Press Right Arrow
           </div>

@@ -174,7 +174,7 @@ export default function TimelapsePromosReviews({ isActive, isAutoplay, onComplet
       </section>
 
       {/* Helper overlay */}
-      {step < 15 && (
+      {step < 15 && !isAutoplay && (
         <div className="fixed top-2 left-2 text-[10px] font-mono text-gray-400 opacity-50 select-none pointer-events-none z-50">
           TIMELAPSE MODE [PROMOS & REVIEWS] - STEP {step}/15
         </div>

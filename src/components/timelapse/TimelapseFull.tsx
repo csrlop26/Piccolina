@@ -59,15 +59,17 @@ export default function TimelapseFull() {
 
   return (
     <div className="bg-white selection:bg-secondary-container selection:text-on-secondary-container overflow-x-hidden">
-      {/* Helper text for recording control */}
-      <div className="fixed top-2 right-2 text-[10px] font-mono opacity-60 z-50 pointer-events-none select-none text-right">
-        <span className={isAutoplay ? 'text-primary animate-pulse font-bold' : 'text-gray-400'}>
-          {isAutoplay ? '🔴 AUTOPLAY RECORDING' : 'MANUAL TIMELAPSE MODE'}
-        </span><br/>
-        Space: Toggle Autoplay<br/>
-        ↓ Next Section | ↑ Prev Section<br/>
-        → Next Anim Step | ← Prev Anim Step
-      </div>
+      {/* Main helper overlay for the entire movie (Hidden in Autoplay) */}
+      {!isAutoplay && (
+        <div className="fixed top-2 left-2 z-50 flex flex-col gap-1 pointer-events-none select-none">
+          <div className={`text-[10px] font-mono font-bold px-2 py-1 rounded bg-black/80 text-white`}>
+            MANUAL TIMELAPSE MODE
+          </div>
+          <div className="text-[10px] font-mono text-gray-500 bg-white/80 px-2 py-0.5 rounded border border-gray-200">
+            Current Section: {SECTIONS[activeIndex].toUpperCase()}
+          </div>
+        </div>
+      )}
 
       <div ref={heroRef} className="w-full">
         <TimelapseHero isActive={activeIndex === 0} isAutoplay={isAutoplay} onComplete={moveToNextSection} />

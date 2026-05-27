@@ -99,7 +99,7 @@ export default function TimelapseFooterCTA({ isActive, isAutoplay, onComplete }:
       </section>
 
       {/* Helper overlay */}
-      {step < 10 && (
+      {step < 10 && !isAutoplay && (
         <div className="fixed top-2 left-2 text-[10px] font-mono text-gray-400 opacity-50 select-none pointer-events-none z-50">
           TIMELAPSE MODE [FOOTER] - STEP {step}/10
         </div>

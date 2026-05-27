@@ -176,8 +176,8 @@ export default function TimelapseStoria({ isActive, isAutoplay, onComplete }: { 
           )}
         </AnimatePresence>
 
-        {/* Helper overlay hidden when finished */}
-        {step < 22 && (
+        {/* Helper overlay */}
+        {step < 22 && !isAutoplay && (
           <div className="fixed top-2 left-2 text-[10px] font-mono text-gray-400 opacity-50 select-none pointer-events-none z-50">
             TIMELAPSE MODE [STORIA] - STEP {step}/22
           </div>

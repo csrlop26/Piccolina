@@ -163,7 +163,7 @@ export default function TimelapseSplitBlock({ isActive, isAutoplay, onComplete }
       </AnimatePresence>
 
       {/* Helper overlay */}
-      {step < 17 && (
+      {step < 17 && !isAutoplay && (
         <div className="fixed top-2 left-2 text-[10px] font-mono text-gray-400 opacity-50 select-none pointer-events-none z-50">
           TIMELAPSE MODE [SPLIT BLOCK] - STEP {step}/17
         </div>
