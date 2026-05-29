@@ -140,6 +140,18 @@ export default function App() {
         {/* Section A: Hero */}
         <section className="relative min-h-screen flex flex-col bg-background">
 
+          {/* SVG filter defs — cheese melt edge effect */}
+          <svg className="absolute w-0 h-0 overflow-hidden pointer-events-none" aria-hidden="true">
+            <defs>
+              <filter id="piccola-cheese" x="-18%" y="-18%" width="136%" height="136%" colorInterpolationFilters="sRGB">
+                <feTurbulence type="turbulence" baseFrequency="0.016 0.011" numOctaves="4" result="noise" seed="7">
+                  <animate attributeName="baseFrequency" values="0.016 0.011;0.021 0.014;0.013 0.010;0.019 0.013;0.016 0.011" dur="16s" repeatCount="indefinite" />
+                </feTurbulence>
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="10" xChannelSelector="R" yChannelSelector="G" />
+              </filter>
+            </defs>
+          </svg>
+
           {/* BACKGROUND TEXT: Huge bold "PICCOLINA" perfectly centered */}
           <motion.div
             className="absolute inset-0 flex items-center justify-center select-none pointer-events-none z-30"
@@ -151,7 +163,7 @@ export default function App() {
               className="font-display font-black text-on-surface uppercase leading-[0.88] tracking-tighter"
               style={{ fontSize: 'clamp(46px, 13.5vw, 200px)' }}
             >
-              PICCOLI<span style={{ color: '#e8563a' }}>N</span>A
+              PICCOLI<span style={{ color: '#ffffff', WebkitTextStroke: '2px #c94028', paintOrder: 'stroke fill' }}>N</span>A
             </h1>
           </motion.div>
 
@@ -169,8 +181,8 @@ export default function App() {
                 <svg className="w-full h-full" viewBox="0 0 100 100">
                   <path d="M 50,50 m -37,0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="transparent" id="heroBadge" />
                   <circle fill="#f4a340" cx="50" cy="50" r="38" />
-                  <text style={{ fontSize: '6.5px', fontWeight: 700, letterSpacing: '0.2em', fill: '#2d3922', textTransform: 'uppercase' }}>
-                    <textPath xlinkHref="#heroBadge">
+                  <text style={{ fontSize: '5.4px', fontWeight: 700, letterSpacing: '0.17em', fill: '#2d3922', textTransform: 'uppercase' }} textAnchor="middle">
+                    <textPath xlinkHref="#heroBadge" startOffset="50%">
                       • TAKE A SLICE • HORNO DE LEÑA • SOURDOUGH •
                     </textPath>
                   </text>
@@ -248,13 +260,14 @@ export default function App() {
                 transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
               />
 
-              {/* 4. Main coral disc — organic blob morphing */}
+              {/* 4. Main coral disc — cheese melt SVG filter + subtle blob */}
               <motion.div
                 className="absolute pointer-events-none"
                 style={{
                   width: 'clamp(300px, 58vw, 740px)',
                   height: 'clamp(300px, 58vw, 740px)',
                   backgroundColor: '#e8563a',
+                  filter: 'url(#piccola-cheese)',
                 }}
                 initial={{ scale: 0, opacity: 0, borderRadius: '50%' }}
                 animate={{
@@ -262,90 +275,35 @@ export default function App() {
                   opacity: 1,
                   borderRadius: [
                     '50%',
-                    '54% 46% 44% 56% / 50% 50% 55% 45%',
-                    '46% 54% 56% 44% / 54% 46% 47% 53%',
-                    '52% 48% 47% 53% / 47% 53% 54% 46%',
+                    '52% 48% 46% 54% / 50% 50% 53% 47%',
+                    '48% 52% 54% 46% / 53% 47% 49% 51%',
                     '50%',
                   ],
                 }}
                 transition={{
                   scale: { duration: 0.8, delay: 0.5, ease: [0.22, 1, 0.36, 1] },
                   opacity: { duration: 0.8, delay: 0.5 },
-                  borderRadius: { duration: 9, repeat: Infinity, ease: 'easeInOut', delay: 1.4 },
+                  borderRadius: { duration: 11, repeat: Infinity, ease: 'easeInOut', delay: 1.4 },
                 }}
               />
 
-              {/* 5. Pizza + cheese drips — same entrance animation */}
-              <motion.div
-                className="relative z-10"
+              {/* 5. Pizza */}
+              <motion.img
+                src={IMAGES_RESOURCES.heroPizza}
+                alt="Pizza artesanal de horno de leña"
+                className="relative z-10 select-none block"
+                style={{
+                  width: 'clamp(280px, 54vw, 700px)',
+                  height: 'clamp(280px, 54vw, 700px)',
+                  objectFit: 'cover',
+                  clipPath: 'circle(43.5% at 50% 50%)',
+                  filter: 'drop-shadow(0 28px 44px rgba(0,0,0,0.25))',
+                }}
                 initial={{ opacity: 0, y: 120, rotate: -14, scale: 0.85 }}
                 animate={{ opacity: 1, y: 0, rotate: 0, scale: 1 }}
                 transition={{ duration: 1.1, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              >
-                {/* Cheese drips — hang below pizza, animate in after pizza lands */}
-                <motion.div
-                  className="absolute left-[8%] right-[8%] pointer-events-none"
-                  style={{ top: '82%', height: '22%', overflow: 'visible' }}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 1.5, duration: 0.3 }}
-                >
-                  <svg
-                    width="100%" height="100%"
-                    viewBox="0 0 560 100"
-                    preserveAspectRatio="xMidYMin meet"
-                    overflow="visible"
-                    fill="none"
-                  >
-                    {([
-                      { cx: 100, h: 68, w: 14, delay: 1.52, color: '#f5c518' },
-                      { cx: 160, h: 48, w: 10, delay: 1.68, color: '#fbbf24' },
-                      { cx: 220, h: 84, w: 17, delay: 1.55, color: '#f5c518' },
-                      { cx: 285, h: 56, w: 12, delay: 1.73, color: '#f59e0b' },
-                      { cx: 345, h: 44, w: 9,  delay: 1.80, color: '#fbbf24' },
-                      { cx: 405, h: 76, w: 15, delay: 1.60, color: '#f5c518' },
-                      { cx: 460, h: 52, w: 11, delay: 1.70, color: '#f59e0b' },
-                    ] as const).map((d, i) => (
-                      <motion.path
-                        key={i}
-                        d={`M${d.cx} 2 C${d.cx - d.w} ${d.h * 0.28} ${d.cx - d.w * 1.7} ${d.h * 0.72} ${d.cx} ${d.h} C${d.cx + d.w * 1.7} ${d.h * 0.72} ${d.cx + d.w} ${d.h * 0.28} ${d.cx} 2 Z`}
-                        fill={d.color}
-                        opacity="0.88"
-                        style={{ transformOrigin: `${d.cx}px 0px` }}
-                        initial={{ scaleY: 0 }}
-                        animate={{
-                          scaleY: 1,
-                          y: [0, 2 + (i % 3), 0],
-                        }}
-                        transition={{
-                          scaleY: { delay: d.delay, duration: 0.55, ease: [0.22, 1, 0.36, 1] },
-                          y: {
-                            delay: d.delay + 0.55,
-                            repeat: Infinity,
-                            duration: 2.1 + i * 0.28,
-                            ease: 'easeInOut',
-                          },
-                        }}
-                      />
-                    ))}
-                  </svg>
-                </motion.div>
-
-                {/* Pizza image */}
-                <img
-                  src={IMAGES_RESOURCES.heroPizza}
-                  alt="Pizza artesanal de horno de leña"
-                  className="relative select-none block"
-                  style={{
-                    width: 'clamp(280px, 54vw, 700px)',
-                    height: 'clamp(280px, 54vw, 700px)',
-                    objectFit: 'cover',
-                    clipPath: 'circle(43.5% at 50% 50%)',
-                    filter: 'drop-shadow(0 28px 44px rgba(0,0,0,0.25))',
-                  }}
-                  referrerPolicy="no-referrer"
-                />
-              </motion.div>
+                referrerPolicy="no-referrer"
+              />
 
             </div>
           </div>
