@@ -96,15 +96,22 @@
   border-radius: 100%;
 }
 
-img[src*='margherita_real'],
-img[src*='pepperoni_real'],
-img[src*='carbonara_real'],
-img[src*='vegana_real'],
-img[src*='pizza'],
-img[src*='_ai.png'] {
+/* Hero pizza images with transparent background removal */
+section:first-of-type img[src*='pepperoni'],
+section:first-of-type img[src*='_ai.png'] {
   clip-path: circle(43.5% at 50% 50%);
-  mix-blend-mode: screen;
-  filter: brightness(1.02) contrast(1.05);
+  mix-blend-mode: lighten;
+  filter: drop-shadow(0 28px 44px rgba(0,0,0,0.2));
+}
+
+/* Menu pizza cards - preserve contrast */
+.grid img[src*='margherita'],
+.grid img[src*='pepperoni'],
+.grid img[src*='carbonara'],
+.grid img[src*='vegana'],
+.grid img[src*='_ai.png'] {
+  clip-path: circle(43.5% at 50% 50%);
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.08));
 }
 
 .blueprint-grid {
