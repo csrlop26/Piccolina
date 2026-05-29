@@ -198,17 +198,14 @@ export default function TimelapseHero({ isActive, isAutoplay, onComplete }: { is
                 />
                 {step >= 6 && (
                   <>
-                    <circle stroke="#2d3922" strokeWidth="0.7" strokeOpacity="0.25" cx="50" cy="50" r="32" />
-                    {[0,45,90,135,180,225,270,315].map((deg, i) => {
-                      const rad = Math.PI / 180 * deg;
-                      return (
-                        <line key={i}
-                          x1={50 + 34 * Math.cos(rad)} y1={50 + 34 * Math.sin(rad)}
-                          x2={50 + 39 * Math.cos(rad)} y2={50 + 39 * Math.sin(rad)}
-                          stroke="#2d3922" strokeWidth={i % 2 === 0 ? 1.5 : 0.8} strokeOpacity="0.45"
-                        />
-                      );
-                    })}
+                    <circle stroke="#2d3922" strokeWidth="0.7" strokeOpacity="0.3" cx="50" cy="50" r="32" />
+                    {/* Circular text — same as hero badge */}
+                    <path id="tlBadgeRing" d="M 50,50 m -36,0 a 36,36 0 1,1 72,0 a 36,36 0 1,1 -72,0" fill="none" stroke="none" />
+                    <text style={{ fontSize: '5.2px', fontWeight: 700, letterSpacing: '0.1em', fill: '#2d3922', textTransform: 'uppercase' }} textAnchor="middle">
+                      <textPath xlinkHref="#tlBadgeRing" startOffset="25%">
+                        • TAKE A SLICE • LOVE PIZZA •
+                      </textPath>
+                    </text>
                   </>
                 )}
               </svg>

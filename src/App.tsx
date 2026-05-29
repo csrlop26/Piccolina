@@ -161,7 +161,11 @@ export default function App() {
           >
             <h1
               className="font-display font-black text-on-surface uppercase leading-[0.88] tracking-tighter"
-              style={{ fontSize: 'clamp(46px, 13.5vw, 200px)' }}
+              style={{
+                fontSize: 'clamp(46px, 13.5vw, 200px)',
+                WebkitTextStroke: '1px rgba(0,0,0,0.28)',
+                paintOrder: 'stroke fill',
+              }}
             >
               PICCOLI<span style={{ color: '#ffffff', WebkitTextStroke: '2px #c94028', paintOrder: 'stroke fill' }}>N</span>A
             </h1>
@@ -183,28 +187,24 @@ export default function App() {
                   <circle stroke="#2d3922" strokeWidth="1.3" strokeDasharray="3.8 2.8" cx="50" cy="50" r="46" />
                   {/* Amber fill */}
                   <circle fill="#f4a340" cx="50" cy="50" r="40" />
-                  {/* Inner subtle ring */}
-                  <circle stroke="#2d3922" strokeWidth="0.7" strokeOpacity="0.25" cx="50" cy="50" r="32" />
-                  {/* 8 tick marks (clean stamp feel) */}
-                  {[0,45,90,135,180,225,270,315].map((deg, i) => {
-                    const r = Math.PI / 180 * deg;
-                    return (
-                      <line key={i}
-                        x1={50 + 34 * Math.cos(r)} y1={50 + 34 * Math.sin(r)}
-                        x2={50 + 39 * Math.cos(r)} y2={50 + 39 * Math.sin(r)}
-                        stroke="#2d3922" strokeWidth={i % 2 === 0 ? 1.5 : 0.8} strokeOpacity="0.45"
-                      />
-                    );
-                  })}
+                  {/* Inner ring */}
+                  <circle stroke="#2d3922" strokeWidth="0.7" strokeOpacity="0.3" cx="50" cy="50" r="32" />
+                  {/* Invisible path for circular text — clockwise, starts at left, r=36 */}
+                  <path id="badgeTextRing" d="M 50,50 m -36,0 a 36,36 0 1,1 72,0 a 36,36 0 1,1 -72,0" fill="none" stroke="none" />
+                  {/* Circular text — startOffset 25% centers it at the TOP of the circle */}
+                  <text style={{ fontSize: '5.2px', fontWeight: 700, letterSpacing: '0.1em', fill: '#2d3922', textTransform: 'uppercase' }} textAnchor="middle">
+                    <textPath xlinkHref="#badgeTextRing" startOffset="25%">
+                      • TAKE A SLICE • LOVE PIZZA •
+                    </textPath>
+                  </text>
                 </svg>
-                {/* Pizza slice icon — centered */}
+                {/* Pizza slice SVG centered — static inside spinning badge */}
                 <div className="absolute inset-0 flex items-center justify-center select-none">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                    <path d="M12 3L3 19h18L12 3z" fill="#2d3922" opacity="0.85"/>
-                    <path d="M12 7L6 17h12L12 7z" fill="#f4a340" opacity="0.6"/>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 3L3 19h18L12 3z" fill="#2d3922" opacity="0.9"/>
+                    <path d="M12 7L6 17h12L12 7z" fill="#f4a340" opacity="0.65"/>
                     <circle cx="10" cy="14" r="1.3" fill="#e8563a"/>
-                    <circle cx="14.5" cy="15" r="1" fill="#e8563a" opacity="0.75"/>
-                    <circle cx="12" cy="11" r="0.8" fill="#2d3922" opacity="0.4"/>
+                    <circle cx="14.5" cy="15" r="1" fill="#e8563a" opacity="0.8"/>
                   </svg>
                 </div>
               </div>
@@ -299,7 +299,7 @@ export default function App() {
                 }}
               />
 
-              {/* 5. Pizza */}
+              {/* 5. Pizza + 3D depth vignette */}
               <motion.img
                 src={IMAGES_RESOURCES.heroPizza}
                 alt="Pizza artesanal de horno de leña"
@@ -309,12 +309,23 @@ export default function App() {
                   height: 'clamp(280px, 54vw, 700px)',
                   objectFit: 'cover',
                   clipPath: 'circle(43.5% at 50% 50%)',
-                  filter: 'drop-shadow(0 28px 44px rgba(0,0,0,0.25))',
+                  filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.35)) drop-shadow(0 4px 8px rgba(0,0,0,0.2))',
                 }}
                 initial={{ opacity: 0, y: 120, rotate: -14, scale: 0.85 }}
                 animate={{ opacity: 1, y: 0, rotate: 0, scale: 1 }}
                 transition={{ duration: 1.1, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
                 referrerPolicy="no-referrer"
+              />
+              {/* Vignette 3D: darkens pizza edges for depth/volume */}
+              <div
+                className="absolute z-20 pointer-events-none left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+                style={{
+                  width: 'clamp(280px, 54vw, 700px)',
+                  height: 'clamp(280px, 54vw, 700px)',
+                  clipPath: 'circle(43.5% at 50% 50%)',
+                  background: 'radial-gradient(circle at 42% 34%, transparent 38%, rgba(0,0,0,0.18) 78%, rgba(0,0,0,0.26) 100%)',
+                  borderRadius: '50%',
+                }}
               />
 
             </div>

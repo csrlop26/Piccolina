@@ -96,9 +96,9 @@
   border-radius: 100%;
 }
 
-/* Hero pizza — blend-mode removes white bg on cream background */
+/* Hero pizza — multiply blend removes white bg while preserving colors */
 .hero-pizza {
-  mix-blend-mode: lighten;
+  mix-blend-mode: multiply;
 }
 
 .blueprint-grid {
