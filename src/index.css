@@ -96,9 +96,9 @@
   border-radius: 100%;
 }
 
-/* Hero pizza — multiply blend removes white bg while preserving colors */
+/* Hero pizza — renders naturally above coral disc */
 .hero-pizza {
-  mix-blend-mode: multiply;
+  isolation: auto;
 }
 
 .blueprint-grid {

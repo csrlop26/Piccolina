@@ -183,24 +183,30 @@ export default function App() {
             >
               <div className="relative w-[6.5rem] h-[6.5rem] animate-spin-slow">
                 <svg className="w-full h-full" viewBox="0 0 100 100" fill="none">
-                  {/* Outer dashed ring */}
-                  <circle stroke="#2d3922" strokeWidth="1.3" strokeDasharray="3.8 2.8" cx="50" cy="50" r="46" />
+                  {/* Outer solid ring */}
+                  <circle stroke="#2d3922" strokeWidth="1.8" cx="50" cy="50" r="47" />
+                  {/* Outer decorative dashed ring */}
+                  <circle stroke="#2d3922" strokeWidth="0.7" strokeDasharray="2.2 2.2" cx="50" cy="50" r="44" />
                   {/* Amber fill */}
-                  <circle fill="#f4a340" cx="50" cy="50" r="40" />
+                  <circle fill="#f4a340" cx="50" cy="50" r="41" />
                   {/* Inner ring */}
-                  <circle stroke="#2d3922" strokeWidth="0.7" strokeOpacity="0.3" cx="50" cy="50" r="32" />
-                  {/* Invisible path for circular text — clockwise, starts at left, r=36 */}
-                  <path id="badgeTextRing" d="M 50,50 m -36,0 a 36,36 0 1,1 72,0 a 36,36 0 1,1 -72,0" fill="none" stroke="none" />
-                  {/* Circular text — startOffset 25% centers it at the TOP of the circle */}
-                  <text style={{ fontSize: '5.2px', fontWeight: 700, letterSpacing: '0.1em', fill: '#2d3922', textTransform: 'uppercase' }} textAnchor="middle">
-                    <textPath xlinkHref="#badgeTextRing" startOffset="25%">
-                      • TAKE A SLICE • LOVE PIZZA •
-                    </textPath>
+                  <circle stroke="#2d3922" strokeWidth="1.2" cx="50" cy="50" r="31" />
+
+                  {/* TOP arc: left → clockwise through top → right (startOffset 50% = top center) */}
+                  <path id="heroBadgeTop" d="M 14,50 A 36,36 0 1,1 86,50" fill="none" stroke="none"/>
+                  {/* BOTTOM arc: left → counter-clockwise through bottom → right (startOffset 50% = bottom center) */}
+                  <path id="heroBadgeBot" d="M 14,50 A 36,36 0 1,0 86,50" fill="none" stroke="none"/>
+
+                  <text style={{ fontSize: '6.2px', fontWeight: 800, letterSpacing: '0.09em', fill: '#2d3922', textTransform: 'uppercase' }} textAnchor="middle">
+                    <textPath xlinkHref="#heroBadgeTop" startOffset="50%">TAKE A SLICE</textPath>
+                  </text>
+                  <text style={{ fontSize: '6.2px', fontWeight: 800, letterSpacing: '0.09em', fill: '#2d3922', textTransform: 'uppercase' }} textAnchor="middle">
+                    <textPath xlinkHref="#heroBadgeBot" startOffset="50%">LOVE PIZZA</textPath>
                   </text>
                 </svg>
-                {/* Pizza slice SVG centered — static inside spinning badge */}
+                {/* Pizza slice centered */}
                 <div className="absolute inset-0 flex items-center justify-center select-none">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
                     <path d="M12 3L3 19h18L12 3z" fill="#2d3922" opacity="0.9"/>
                     <path d="M12 7L6 17h12L12 7z" fill="#f4a340" opacity="0.65"/>
                     <circle cx="10" cy="14" r="1.3" fill="#e8563a"/>

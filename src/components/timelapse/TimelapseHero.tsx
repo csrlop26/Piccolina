@@ -198,13 +198,19 @@ export default function TimelapseHero({ isActive, isAutoplay, onComplete }: { is
                 />
                 {step >= 6 && (
                   <>
-                    <circle stroke="#2d3922" strokeWidth="0.7" strokeOpacity="0.3" cx="50" cy="50" r="32" />
-                    {/* Circular text — same as hero badge */}
-                    <path id="tlBadgeRing" d="M 50,50 m -36,0 a 36,36 0 1,1 72,0 a 36,36 0 1,1 -72,0" fill="none" stroke="none" />
-                    <text style={{ fontSize: '5.2px', fontWeight: 700, letterSpacing: '0.1em', fill: '#2d3922', textTransform: 'uppercase' }} textAnchor="middle">
-                      <textPath xlinkHref="#tlBadgeRing" startOffset="25%">
-                        • TAKE A SLICE • LOVE PIZZA •
-                      </textPath>
+                    {/* Outer decorative dashed ring */}
+                    <circle stroke="#2d3922" strokeWidth="0.7" strokeDasharray="2.2 2.2" cx="50" cy="50" r="44" />
+                    {/* Inner ring */}
+                    <circle stroke="#2d3922" strokeWidth="1.2" cx="50" cy="50" r="31" />
+                    {/* TOP arc path */}
+                    <path id="tlBadgeTop" d="M 14,50 A 36,36 0 1,1 86,50" fill="none" stroke="none"/>
+                    {/* BOTTOM arc path — counter-clockwise for correct reading direction */}
+                    <path id="tlBadgeBot" d="M 14,50 A 36,36 0 1,0 86,50" fill="none" stroke="none"/>
+                    <text style={{ fontSize: '6.2px', fontWeight: 800, letterSpacing: '0.09em', fill: '#2d3922', textTransform: 'uppercase' }} textAnchor="middle">
+                      <textPath xlinkHref="#tlBadgeTop" startOffset="50%">TAKE A SLICE</textPath>
+                    </text>
+                    <text style={{ fontSize: '6.2px', fontWeight: 800, letterSpacing: '0.09em', fill: '#2d3922', textTransform: 'uppercase' }} textAnchor="middle">
+                      <textPath xlinkHref="#tlBadgeBot" startOffset="50%">LOVE PIZZA</textPath>
                     </text>
                   </>
                 )}
