@@ -96,10 +96,63 @@
   border-radius: 100%;
 }
 
-img[src*='margherita_real'], 
-img[src*='pepperoni_real'], 
-img[src*='carbonara_real'], 
-img[src*='vegana_real'], 
-img[src*='pizza'] { 
-  clip-path: circle(48% at 50% 50%); 
+img[src*='margherita_real'],
+img[src*='pepperoni_real'],
+img[src*='carbonara_real'],
+img[src*='vegana_real'],
+img[src*='pizza'],
+img[src*='_ai.png'] {
+  clip-path: circle(43.5% at 50% 50%);
+  mix-blend-mode: screen;
+  filter: brightness(1.02) contrast(1.05);
+}
+
+.blueprint-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(0, 122, 204, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 122, 204, 0.08) 1px, transparent 1px);
+  background-color: #f8fafc;
+}
+
+/* Design simulation utilities */
+.snap-guide-h {
+  position: absolute;
+  height: 1px;
+  width: 100%;
+  background: repeating-linear-gradient(
+    to right,
+    #22c55e 0px,
+    #22c55e 4px,
+    transparent 4px,
+    transparent 8px
+  );
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 90;
+}
+
+.snap-guide-v {
+  position: absolute;
+  width: 1px;
+  height: 100%;
+  background: repeating-linear-gradient(
+    to bottom,
+    #22c55e 0px,
+    #22c55e 4px,
+    transparent 4px,
+    transparent 8px
+  );
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 90;
+}
+
+@keyframes selection-pulse {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(13, 153, 255, 0.3); }
+  50% { box-shadow: 0 0 0 3px rgba(13, 153, 255, 0.15); }
+}
+
+.selection-ring {
+  animation: selection-pulse 1.5s ease-in-out infinite;
 }
