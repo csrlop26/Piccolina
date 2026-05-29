@@ -178,21 +178,33 @@ export default function App() {
               transition={{ duration: 0.7, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="relative w-[6.5rem] h-[6.5rem] animate-spin-slow">
-                <svg className="w-full h-full" viewBox="0 0 100 100">
-                  <path d="M 50,50 m -37,0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="transparent" id="heroBadge" />
-                  <circle fill="#f4a340" cx="50" cy="50" r="38" />
-                  <text style={{ fontSize: '5.4px', fontWeight: 700, letterSpacing: '0.17em', fill: '#2d3922', textTransform: 'uppercase' }} textAnchor="middle">
-                    <textPath xlinkHref="#heroBadge" startOffset="50%">
-                      • TAKE A SLICE • HORNO DE LEÑA • SOURDOUGH •
-                    </textPath>
-                  </text>
+                <svg className="w-full h-full" viewBox="0 0 100 100" fill="none">
+                  {/* Outer dashed ring */}
+                  <circle stroke="#2d3922" strokeWidth="1.3" strokeDasharray="3.8 2.8" cx="50" cy="50" r="46" />
+                  {/* Amber fill */}
+                  <circle fill="#f4a340" cx="50" cy="50" r="40" />
+                  {/* Inner subtle ring */}
+                  <circle stroke="#2d3922" strokeWidth="0.7" strokeOpacity="0.25" cx="50" cy="50" r="32" />
+                  {/* 8 tick marks (clean stamp feel) */}
+                  {[0,45,90,135,180,225,270,315].map((deg, i) => {
+                    const r = Math.PI / 180 * deg;
+                    return (
+                      <line key={i}
+                        x1={50 + 34 * Math.cos(r)} y1={50 + 34 * Math.sin(r)}
+                        x2={50 + 39 * Math.cos(r)} y2={50 + 39 * Math.sin(r)}
+                        stroke="#2d3922" strokeWidth={i % 2 === 0 ? 1.5 : 0.8} strokeOpacity="0.45"
+                      />
+                    );
+                  })}
                 </svg>
+                {/* Pizza slice icon — centered */}
                 <div className="absolute inset-0 flex items-center justify-center select-none">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="#2d3922">
-                    <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.4 0-8-3.6-8-8s3.6-8 8-8 8 3.6 8 8-3.6 8-8 8z" opacity="0.3"/>
-                    <path d="M12 4L4 20h16L12 4zm0 3.5l5.5 11H6.5L12 7.5z" opacity="0.8"/>
-                    <circle cx="10" cy="14" r="1.2" fill="#e8563a"/>
-                    <circle cx="14" cy="16" r="1" fill="#e8563a" opacity="0.8"/>
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 3L3 19h18L12 3z" fill="#2d3922" opacity="0.85"/>
+                    <path d="M12 7L6 17h12L12 7z" fill="#f4a340" opacity="0.6"/>
+                    <circle cx="10" cy="14" r="1.3" fill="#e8563a"/>
+                    <circle cx="14.5" cy="15" r="1" fill="#e8563a" opacity="0.75"/>
+                    <circle cx="12" cy="11" r="0.8" fill="#2d3922" opacity="0.4"/>
                   </svg>
                 </div>
               </div>
@@ -291,7 +303,7 @@ export default function App() {
               <motion.img
                 src={IMAGES_RESOURCES.heroPizza}
                 alt="Pizza artesanal de horno de leña"
-                className="relative z-10 select-none block"
+                className="relative z-10 select-none block hero-pizza"
                 style={{
                   width: 'clamp(280px, 54vw, 700px)',
                   height: 'clamp(280px, 54vw, 700px)',
@@ -427,11 +439,21 @@ export default function App() {
                 <div>
                   {/* Pizza Visual Container */}
                   <div className="relative mb-6 h-48 flex items-center justify-center bg-surface-low/30 border border-on-surface/5 rounded-xl overflow-visible">
+                    {/* Circular halo shadow behind pizza */}
+                    <div
+                      className="absolute rounded-full blur-2xl pointer-events-none"
+                      style={{ width: '148px', height: '148px', backgroundColor: 'rgba(80,40,10,0.18)' }}
+                    />
+                    {/* Elliptical cast shadow below */}
+                    <div
+                      className="absolute rounded-full blur-lg pointer-events-none"
+                      style={{ width: '130px', height: '22px', backgroundColor: 'rgba(0,0,0,0.14)', bottom: '10px' }}
+                    />
                     <img
                       src={pizza.image}
                       alt={pizza.name}
-                      className="w-40 h-40 object-cover group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 hover:cursor-zoom-in"
-                      style={{ clipPath: 'circle(43.5% at 50% 50%)' }}
+                      className="relative z-10 w-40 h-40 object-cover group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 hover:cursor-zoom-in"
+                      style={{ clipPath: 'circle(43.5% at 50% 50%)', filter: 'drop-shadow(0 6px 16px rgba(0,0,0,0.18))' }}
                       onClick={() => setSelectedPizzaToCustomize(pizza)}
                       referrerPolicy="no-referrer"
                     />

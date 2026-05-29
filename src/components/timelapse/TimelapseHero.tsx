@@ -182,15 +182,34 @@ export default function TimelapseHero({ isActive, isAutoplay, onComplete }: { is
             }}
           >
             <div className="relative w-[6.5rem] h-[6.5rem] animate-spin-slow">
-              <svg className="w-full h-full" viewBox="0 0 100 100">
-                <path d="M 50,50 m -37,0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="transparent" id="heroBadge" />
-                <circle fill={step >= 6 ? "#f4a340" : "transparent"} cx="50" cy="50" r="38" className="transition-all duration-[1000ms]" style={{ stroke: step === 5 ? '#38bdf8' : 'none', strokeDasharray: step === 5 ? '4 4' : 'none' }} />
+              <svg className="w-full h-full" viewBox="0 0 100 100" fill="none">
+                {/* Blueprint dashed ring (step 5) → becomes amber filled (step 6+) */}
+                <circle
+                  stroke={step === 5 ? '#38bdf8' : '#2d3922'}
+                  strokeWidth="1.3"
+                  strokeDasharray={step === 5 ? '4 3' : '3.8 2.8'}
+                  cx="50" cy="50" r="46"
+                  className="transition-all duration-700"
+                />
+                <circle
+                  fill={step >= 6 ? '#f4a340' : 'transparent'}
+                  cx="50" cy="50" r="40"
+                  className="transition-all duration-[1000ms]"
+                />
                 {step >= 6 && (
-                  <text style={{ fontSize: '6.5px', fontWeight: 700, letterSpacing: '0.2em', fill: '#2d3922', textTransform: 'uppercase' }}>
-                    <textPath xlinkHref="#heroBadge">
-                      • TAKE A SLICE • HORNO DE LEÑA • SOURDOUGH •
-                    </textPath>
-                  </text>
+                  <>
+                    <circle stroke="#2d3922" strokeWidth="0.7" strokeOpacity="0.25" cx="50" cy="50" r="32" />
+                    {[0,45,90,135,180,225,270,315].map((deg, i) => {
+                      const rad = Math.PI / 180 * deg;
+                      return (
+                        <line key={i}
+                          x1={50 + 34 * Math.cos(rad)} y1={50 + 34 * Math.sin(rad)}
+                          x2={50 + 39 * Math.cos(rad)} y2={50 + 39 * Math.sin(rad)}
+                          stroke="#2d3922" strokeWidth={i % 2 === 0 ? 1.5 : 0.8} strokeOpacity="0.45"
+                        />
+                      );
+                    })}
+                  </>
                 )}
               </svg>
               <motion.div
@@ -199,10 +218,11 @@ export default function TimelapseHero({ isActive, isAutoplay, onComplete }: { is
                 transition={{ type: "spring", stiffness: 200, damping: 10 }}
                 className="absolute inset-0 flex items-center justify-center select-none"
               >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="#2d3922">
-                  <path d="M12 2C12 2 2 8 2 14c0 6.6 4.5 8 10 8s10-1.4 10-8c0-6 -10-12 -10-12z" />
-                  <circle cx="9" cy="11" r="1.5" fill="#f4a340" opacity="0.8" />
-                  <circle cx="14" cy="13" r="1" fill="#f4a340" opacity="0.6" />
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 3L3 19h18L12 3z" fill="#2d3922" opacity="0.85"/>
+                  <path d="M12 7L6 17h12L12 7z" fill="#f4a340" opacity="0.6"/>
+                  <circle cx="10" cy="14" r="1.3" fill="#e8563a"/>
+                  <circle cx="14.5" cy="15" r="1" fill="#e8563a" opacity="0.75"/>
                 </svg>
               </motion.div>
             </div>
@@ -354,8 +374,9 @@ export default function TimelapseHero({ isActive, isAutoplay, onComplete }: { is
                 alt="Pizza artesanal de horno de leña"
                 className="w-full h-full object-cover"
                 style={{
-                  clipPath: step >= 12 ? 'circle(43.5% at 50% 50%)' : (step === 11 ? 'circle(0% at 50% 50%)' : 'circle(0%)'),
-                  transition: 'clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1)'
+                  clipPath: step >= 12 ? 'circle(43.5% at 50% 50%)' : (step === 11 ? 'circle(43.5% at 50% 50%)' : 'circle(0%)'),
+                  transition: 'clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+                  mixBlendMode: 'normal',
                 }}
                 referrerPolicy="no-referrer"
               />
