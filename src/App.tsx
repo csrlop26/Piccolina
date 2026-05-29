@@ -138,7 +138,7 @@ export default function App() {
 
       <main>
         {/* Section A: Hero */}
-        <section className="relative min-h-screen flex flex-col bg-background overflow-hidden">
+        <section className="relative min-h-screen flex flex-col bg-background">
 
           {/* BACKGROUND TEXT: Huge bold "PICCOLINA" perfectly centered */}
           <motion.div
@@ -175,57 +175,178 @@ export default function App() {
                     </textPath>
                   </text>
                 </svg>
-                <div className="absolute inset-0 flex items-center justify-center text-xl select-none">🍕</div>
+                <div className="absolute inset-0 flex items-center justify-center select-none">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="#2d3922">
+                    <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.4 0-8-3.6-8-8s3.6-8 8-8 8 3.6 8 8-3.6 8-8 8z" opacity="0.3"/>
+                    <path d="M12 4L4 20h16L12 4zm0 3.5l5.5 11H6.5L12 7.5z" opacity="0.8"/>
+                    <circle cx="10" cy="14" r="1.2" fill="#e8563a"/>
+                    <circle cx="14" cy="16" r="1" fill="#e8563a" opacity="0.8"/>
+                  </svg>
+                </div>
               </div>
             </motion.div>
 
-            {/* Basil leaves */}
+            {/* Basil leaves — SVG custom */}
             <motion.div
-              className="absolute bottom-[22%] left-[7%] text-2xl select-none"
+              className="absolute bottom-[22%] left-[7%] select-none"
               initial={{ opacity: 0, x: -20, rotate: 25 }}
-              animate={{ opacity: 0.85, x: 0, rotate: 12 }}
+              animate={{ opacity: 0.75, x: 0, rotate: 12 }}
               transition={{ duration: 0.8, delay: 1.1, ease: 'easeOut' }}
-            >🌿</motion.div>
+            >
+              <svg width="28" height="32" viewBox="0 0 28 32" fill="none">
+                <path d="M14 2C10 8 6 12 6 18c0 5 3.5 7.5 8 7.5s8-2.5 8-7.5c0-6-4-10-8-16z" fill="#4a7c3f" opacity="0.85"/>
+                <path d="M14 6C13 10 11 13 10 17" stroke="#6aab5e" strokeWidth="1" strokeLinecap="round" opacity="0.6"/>
+              </svg>
+            </motion.div>
             <motion.div
-              className="absolute bottom-[18%] right-[7%] text-xl select-none"
+              className="absolute bottom-[18%] right-[7%] select-none"
               initial={{ opacity: 0, x: 20, rotate: -25 }}
-              animate={{ opacity: 0.85, x: 0, rotate: -12 }}
+              animate={{ opacity: 0.7, x: 0, rotate: -15 }}
               transition={{ duration: 0.8, delay: 1.2, ease: 'easeOut' }}
-            >🌿</motion.div>
+            >
+              <svg width="22" height="26" viewBox="0 0 28 32" fill="none">
+                <path d="M14 2C10 8 6 12 6 18c0 5 3.5 7.5 8 7.5s8-2.5 8-7.5c0-6-4-10-8-16z" fill="#4a7c3f" opacity="0.75"/>
+                <path d="M14 6C13 10 11 13 10 17" stroke="#6aab5e" strokeWidth="1" strokeLinecap="round" opacity="0.5"/>
+              </svg>
+            </motion.div>
 
-            {/* Coral oval plate & Pizza Wrapper */}
+            {/* DISC + CHEESE DRIPS + PIZZA */}
             <div className="relative flex items-center justify-center w-full h-full pointer-events-auto">
-              
-              {/* Coral oval plate perfectly centered behind pizza */}
-              <motion.div
-                className="absolute rounded-full"
+
+              {/* 1. Deep atmospheric glow */}
+              <div
+                className="absolute rounded-full pointer-events-none"
                 style={{
-                  width: 'clamp(300px, 58vw, 740px)',
-                  height: 'clamp(300px, 58vw, 740px)', // Made perfectly circular
-                  backgroundColor: '#e8563a',
+                  width: 'clamp(420px, 78vw, 980px)',
+                  height: 'clamp(300px, 56vw, 720px)',
+                  background: 'radial-gradient(ellipse, rgba(232,86,58,0.38) 0%, transparent 68%)',
+                  filter: 'blur(48px)',
                 }}
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.7, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
               />
 
-              {/* Pizza */}
-              <motion.img
-                src={IMAGES_RESOURCES.heroPizza}
-                alt="Pizza artesanal de horno de leña"
-                className="relative z-10 select-none"
+              {/* 2. Outer dashed orbit ring — slow clockwise */}
+              <motion.div
+                className="absolute rounded-full pointer-events-none"
                 style={{
-                  width: 'clamp(280px, 54vw, 700px)', // Made slightly smaller than the coral circle
-                  height: 'clamp(280px, 54vw, 700px)',
-                  objectFit: 'cover',
-                  clipPath: 'circle(48% at 50% 50%)', // Tightened circle crop to hide original background perfectly
-                  filter: 'drop-shadow(0 28px 44px rgba(0,0,0,0.25))',
+                  width: 'clamp(345px, 66vw, 835px)',
+                  height: 'clamp(345px, 66vw, 835px)',
+                  border: '1.5px dashed rgba(232, 86, 58, 0.32)',
                 }}
+                animate={{ rotate: 360 }}
+                transition={{ duration: 65, repeat: Infinity, ease: 'linear' }}
+              />
+
+              {/* 3. Inner dotted ring — slow counter-clockwise */}
+              <motion.div
+                className="absolute rounded-full pointer-events-none"
+                style={{
+                  width: 'clamp(315px, 62vw, 790px)',
+                  height: 'clamp(315px, 62vw, 790px)',
+                  border: '1px dotted rgba(232, 86, 58, 0.18)',
+                }}
+                animate={{ rotate: -360 }}
+                transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
+              />
+
+              {/* 4. Main coral disc — organic blob morphing */}
+              <motion.div
+                className="absolute pointer-events-none"
+                style={{
+                  width: 'clamp(300px, 58vw, 740px)',
+                  height: 'clamp(300px, 58vw, 740px)',
+                  backgroundColor: '#e8563a',
+                }}
+                initial={{ scale: 0, opacity: 0, borderRadius: '50%' }}
+                animate={{
+                  scale: 1,
+                  opacity: 1,
+                  borderRadius: [
+                    '50%',
+                    '54% 46% 44% 56% / 50% 50% 55% 45%',
+                    '46% 54% 56% 44% / 54% 46% 47% 53%',
+                    '52% 48% 47% 53% / 47% 53% 54% 46%',
+                    '50%',
+                  ],
+                }}
+                transition={{
+                  scale: { duration: 0.8, delay: 0.5, ease: [0.22, 1, 0.36, 1] },
+                  opacity: { duration: 0.8, delay: 0.5 },
+                  borderRadius: { duration: 9, repeat: Infinity, ease: 'easeInOut', delay: 1.4 },
+                }}
+              />
+
+              {/* 5. Pizza + cheese drips — same entrance animation */}
+              <motion.div
+                className="relative z-10"
                 initial={{ opacity: 0, y: 120, rotate: -14, scale: 0.85 }}
                 animate={{ opacity: 1, y: 0, rotate: 0, scale: 1 }}
                 transition={{ duration: 1.1, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                referrerPolicy="no-referrer"
-              />
+              >
+                {/* Cheese drips — hang below pizza, animate in after pizza lands */}
+                <motion.div
+                  className="absolute left-[8%] right-[8%] pointer-events-none"
+                  style={{ top: '82%', height: '22%', overflow: 'visible' }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1.5, duration: 0.3 }}
+                >
+                  <svg
+                    width="100%" height="100%"
+                    viewBox="0 0 560 100"
+                    preserveAspectRatio="xMidYMin meet"
+                    overflow="visible"
+                    fill="none"
+                  >
+                    {([
+                      { cx: 100, h: 68, w: 14, delay: 1.52, color: '#f5c518' },
+                      { cx: 160, h: 48, w: 10, delay: 1.68, color: '#fbbf24' },
+                      { cx: 220, h: 84, w: 17, delay: 1.55, color: '#f5c518' },
+                      { cx: 285, h: 56, w: 12, delay: 1.73, color: '#f59e0b' },
+                      { cx: 345, h: 44, w: 9,  delay: 1.80, color: '#fbbf24' },
+                      { cx: 405, h: 76, w: 15, delay: 1.60, color: '#f5c518' },
+                      { cx: 460, h: 52, w: 11, delay: 1.70, color: '#f59e0b' },
+                    ] as const).map((d, i) => (
+                      <motion.path
+                        key={i}
+                        d={`M${d.cx} 2 C${d.cx - d.w} ${d.h * 0.28} ${d.cx - d.w * 1.7} ${d.h * 0.72} ${d.cx} ${d.h} C${d.cx + d.w * 1.7} ${d.h * 0.72} ${d.cx + d.w} ${d.h * 0.28} ${d.cx} 2 Z`}
+                        fill={d.color}
+                        opacity="0.88"
+                        style={{ transformOrigin: `${d.cx}px 0px` }}
+                        initial={{ scaleY: 0 }}
+                        animate={{
+                          scaleY: 1,
+                          y: [0, 2 + (i % 3), 0],
+                        }}
+                        transition={{
+                          scaleY: { delay: d.delay, duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+                          y: {
+                            delay: d.delay + 0.55,
+                            repeat: Infinity,
+                            duration: 2.1 + i * 0.28,
+                            ease: 'easeInOut',
+                          },
+                        }}
+                      />
+                    ))}
+                  </svg>
+                </motion.div>
+
+                {/* Pizza image */}
+                <img
+                  src={IMAGES_RESOURCES.heroPizza}
+                  alt="Pizza artesanal de horno de leña"
+                  className="relative select-none block"
+                  style={{
+                    width: 'clamp(280px, 54vw, 700px)',
+                    height: 'clamp(280px, 54vw, 700px)',
+                    objectFit: 'cover',
+                    clipPath: 'circle(43.5% at 50% 50%)',
+                    filter: 'drop-shadow(0 28px 44px rgba(0,0,0,0.25))',
+                  }}
+                  referrerPolicy="no-referrer"
+                />
+              </motion.div>
+
             </div>
           </div>
 
@@ -301,7 +422,7 @@ export default function App() {
                   src={IMAGES_RESOURCES.storyPepperoni}
                   alt="Pepperoni artesanal"
                   className="w-full object-cover rounded-sm border border-on-surface/5"
-                  style={{ clipPath: 'circle(48% at 50% 50%)' }}
+                  style={{ clipPath: 'circle(43.5% at 50% 50%)' }}
                   referrerPolicy="no-referrer"
                 />
                 <div className="pt-4 text-center">
@@ -352,7 +473,7 @@ export default function App() {
                       src={pizza.image}
                       alt={pizza.name}
                       className="w-40 h-40 object-cover group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 hover:cursor-zoom-in"
-                      style={{ clipPath: 'circle(44% at 50% 50%)' }}
+                      style={{ clipPath: 'circle(43.5% at 50% 50%)' }}
                       onClick={() => setSelectedPizzaToCustomize(pizza)}
                       referrerPolicy="no-referrer"
                     />
@@ -478,7 +599,7 @@ export default function App() {
                   src={IMAGES_RESOURCES.heroPizza}
                   alt="Pizza slice helper artwork"
                   className="w-32 drop-shadow-md select-none pointer-events-none relative z-10"
-                  style={{ clipPath: 'circle(48% at 50% 50%)' }}
+                  style={{ clipPath: 'circle(43.5% at 50% 50%)' }}
                   referrerPolicy="no-referrer"
                 />
               </div>
