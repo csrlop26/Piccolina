@@ -6,11 +6,23 @@ import TimelapseSplitBlock from './TimelapseSplitBlock';
 import TimelapsePromosReviews from './TimelapsePromosReviews';
 import TimelapseFooterCTA from './TimelapseFooterCTA';
 
+import { playWhoosh } from '../../utils/audio';
+
 const SECTIONS = ['hero', 'storia', 'menu', 'split', 'promos', 'footer'];
 
 export default function TimelapseFull() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isAutoplay, setIsAutoplay] = useState(false);
+
+  // Sound transition whoosh effect
+  const isFirstMount = useRef(true);
+  useEffect(() => {
+    if (isFirstMount.current) {
+      isFirstMount.current = false;
+      return;
+    }
+    playWhoosh();
+  }, [activeIndex]);
 
   // Refs for smooth scrolling
   const heroRef = useRef<HTMLDivElement>(null);

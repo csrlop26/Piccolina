@@ -44,7 +44,7 @@ export default function PromoMarquee() {
         src={IMAGES_RESOURCES.heroPizza}
         alt="Artesanal Floating"
         className="absolute top-1/2 left-1/4 -translate-y-1/2 w-36 md:w-48 rotate-45 pointer-events-none drop-shadow-2xl z-10 hidden sm:block opacity-90"
-        style={{ clipPath: 'circle(48% at 50% 50%)' }}
+        style={{ clipPath: 'circle(43.5% at 50% 50%)' }}
         animate={{
           y: ['-55%', '-45%', '-55%'],
           rotate: [45, 55, 45]
@@ -61,7 +61,7 @@ export default function PromoMarquee() {
         src={IMAGES_RESOURCES.storyPepperoni}
         alt="Pepperoni Floating"
         className="absolute top-1/2 right-1/4 -translate-y-1/2 w-44 md:w-56 -rotate-12 pointer-events-none drop-shadow-2xl z-10 hidden sm:block opacity-90"
-        style={{ clipPath: 'circle(48% at 50% 50%)' }}
+        style={{ clipPath: 'circle(43.5% at 50% 50%)' }}
         animate={{
           y: ['-45%', '-55%', '-45%'],
           rotate: [-12, -2, -12]

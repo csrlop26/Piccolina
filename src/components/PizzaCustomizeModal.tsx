@@ -89,7 +89,7 @@ export default function PizzaCustomizeModal({ pizza, onClose, onConfirm }: Pizza
                   src={pizza.image}
                   alt={pizza.name}
                   className="w-28 h-28 object-cover"
-                  style={{ clipPath: 'circle(46% at 50% 50%)' }}
+                  style={{ clipPath: 'circle(43.5% at 50% 50%)' }}
                   referrerPolicy="no-referrer"
                 />
                 {pizza.label && (

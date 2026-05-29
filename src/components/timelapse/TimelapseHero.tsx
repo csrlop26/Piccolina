@@ -61,8 +61,8 @@ export default function TimelapseHero({ isActive, isAutoplay, onComplete }: { is
       case 10: return "/* Coloring plate */\n.plate { background-color: #e8563a; }";
       case 11: return "/* Fetching high-res Pizza asset... */\n<img src=\"pizza.png\" />";
       case 12: return "/* Removing background */\nimg { clip-path: circle(43.5% at 50% 50%); }";
-      case 13: return "/* Applying 3D shadow */\nimg { filter: drop-shadow(0 28px 44px rgba(0,0,0,0.25)); }";
-      case 14: return "/* Final Hero composite ready */\nconsole.log('Hero loaded!');";
+      case 13: return "/* Vignette 3D depth overlay */\n.vignette { background: radial-gradient(\n  circle at 42% 34%, transparent 38%,\n  rgba(0,0,0,0.26) 100%\n); }";
+      case 14: return "/* Orbit rings + atmospheric glow */\n.orbit-ring { animation: rotate 65s linear infinite; }\n.glow { filter: blur(48px); opacity: 0.35; }";
       default: return "";
     }
   };
@@ -105,6 +105,17 @@ export default function TimelapseHero({ isActive, isAutoplay, onComplete }: { is
 
       {/* Main hero wrapper */}
       <section className="relative flex-1 w-full h-full flex flex-col">
+        {/* SVG cheese-melt filter — activates at final composite step */}
+        {step >= 13 && (
+          <svg className="absolute w-0 h-0 overflow-hidden pointer-events-none" aria-hidden="true">
+            <defs>
+              <filter id="tl-cheese" x="-18%" y="-18%" width="136%" height="136%" colorInterpolationFilters="sRGB">
+                <feTurbulence type="turbulence" baseFrequency="0.016 0.011" numOctaves="4" result="noise" seed="7" />
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="10" xChannelSelector="R" yChannelSelector="G" />
+              </filter>
+            </defs>
+          </svg>
+        )}
 
         {/* BACKGROUND TEXT: Huge bold "PICCOLINA" perfectly centered */}
         <motion.div
@@ -143,15 +154,16 @@ export default function TimelapseHero({ isActive, isAutoplay, onComplete }: { is
               className={`font-black text-on-surface leading-[0.88] transition-all duration-1000 ${
                 step >= 3 ? 'font-display uppercase tracking-tighter' : 'font-serif tracking-normal capitalize text-gray-500'
               }`}
-              style={{ 
+              style={{
                 fontSize: step >= 3 ? 'clamp(46px, 13.5vw, 200px)' : 'clamp(28px, 6vw, 75px)',
-                letterSpacing: step >= 3 ? '-0.05em' : '0.1em'
+                letterSpacing: step >= 3 ? '-0.05em' : '0.1em',
+                ...(step >= 3 ? { WebkitTextStroke: '1px rgba(0,0,0,0.28)', paintOrder: 'stroke fill' } : {}),
               }}
             >
               {step >= 3 ? (
                 <>
                   <TypewriterText text="PICCOLI" speed={25} />
-                  <span className={`transition-colors duration-1000 ${step >= 4 ? 'text-[#e8563a]' : 'text-inherit'}`}>
+                  <span style={step >= 4 ? { color: '#ffffff', WebkitTextStroke: '2px #c94028', paintOrder: 'stroke fill' } : {}}>
                     <TypewriterText text="N" speed={25} delay={175} />
                   </span>
                   <TypewriterText text="A" speed={25} delay={200} />
@@ -297,24 +309,70 @@ export default function TimelapseHero({ isActive, isAutoplay, onComplete }: { is
 
           {/* Coral oval plate & Pizza Wrapper */}
           <div className="relative flex items-center justify-center w-full h-full pointer-events-auto">
-            
-            {/* Coral oval plate perfectly centered behind pizza */}
+
+            {/* Step 14: atmospheric glow */}
+            {step >= 14 && (
+              <div
+                className="absolute rounded-full pointer-events-none"
+                style={{
+                  width: 'clamp(420px, 78vw, 980px)',
+                  height: 'clamp(300px, 56vw, 720px)',
+                  background: 'radial-gradient(ellipse, rgba(232,86,58,0.35) 0%, transparent 68%)',
+                  filter: 'blur(48px)',
+                }}
+              />
+            )}
+
+            {/* Step 14: outer orbit ring */}
+            {step >= 14 && (
+              <motion.div
+                className="absolute rounded-full pointer-events-none"
+                style={{
+                  width: 'clamp(345px, 66vw, 835px)',
+                  height: 'clamp(345px, 66vw, 835px)',
+                  border: '1.5px dashed rgba(232,86,58,0.32)',
+                }}
+                animate={{ rotate: 360 }}
+                transition={{ duration: 65, repeat: Infinity, ease: 'linear' }}
+              />
+            )}
+
+            {/* Step 14: inner counter-rotating ring */}
+            {step >= 14 && (
+              <motion.div
+                className="absolute rounded-full pointer-events-none"
+                style={{
+                  width: 'clamp(315px, 62vw, 790px)',
+                  height: 'clamp(315px, 62vw, 790px)',
+                  border: '1px dotted rgba(232,86,58,0.18)',
+                }}
+                animate={{ rotate: -360 }}
+                transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
+              />
+            )}
+
+            {/* Main coral disc */}
             <motion.div
               className={`absolute rounded-full flex items-center justify-center ${step === 9 ? 'border-2 border-dashed border-sky-400 bg-sky-50/10' : ''}`}
               style={{
                 width: 'clamp(300px, 58vw, 740px)',
-                height: 'clamp(300px, 58vw, 740px)', // Perfectly circular
+                height: 'clamp(300px, 58vw, 740px)',
                 backgroundColor: step >= 10 ? '#e8563a' : (step === 9 ? 'transparent' : 'transparent'),
+                filter: step >= 13 ? 'url(#tl-cheese)' : 'none',
               }}
               initial={{ scale: 0, opacity: 0 }}
               animate={{
                 scale: step >= 9 ? [0, 1.12, 0.98, 1] : 0,
-                opacity: step >= 9 ? 1 : 0
+                opacity: step >= 9 ? 1 : 0,
+                borderRadius: step >= 13 ? [
+                  '50%', '54% 46% 44% 56% / 50% 50% 55% 45%',
+                  '46% 54% 56% 44% / 54% 46% 47% 53%', '50%',
+                ] : '50%',
               }}
               transition={{
-                type: "spring",
-                stiffness: 160,
-                damping: 14
+                scale: { type: "spring", stiffness: 160, damping: 14 },
+                opacity: { type: "spring", stiffness: 160, damping: 14 },
+                borderRadius: { duration: 9, repeat: Infinity, ease: 'easeInOut', delay: 0.5 },
               }}
             >
               {/* Selection handles around the plate during step 9 */}

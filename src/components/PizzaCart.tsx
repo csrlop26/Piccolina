@@ -127,7 +127,7 @@ export default function PizzaCart({ isOpen, onClose, cartItems, onUpdateQuantity
                           src={item.pizza.image}
                           alt={item.pizza.name}
                           className="w-full h-full object-cover drop-shadow-md"
-                          style={{ clipPath: 'circle(48% at 50% 50%)' }}
+                          style={{ clipPath: 'circle(43.5% at 50% 50%)' }}
                           referrerPolicy="no-referrer"
                         />
                       </div>

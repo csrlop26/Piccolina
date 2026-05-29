@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { playKeyClick, playSuccessChime } from '../../utils/audio';
 
 interface CodeEditorOverlayProps {
   codeSnippet: string;
@@ -8,9 +9,16 @@ interface CodeEditorOverlayProps {
 
 export default function CodeEditorOverlay({ codeSnippet, isVisible }: CodeEditorOverlayProps) {
   const [displayedText, setDisplayedText] = useState('');
+  const prevLengthRef = useRef(0);
+  const lastCompletedSnippetRef = useRef('');
 
   useEffect(() => {
-    if (!isVisible) return;
+    if (!isVisible) {
+      setDisplayedText('');
+      prevLengthRef.current = 0;
+      lastCompletedSnippetRef.current = '';
+      return;
+    }
     
     // Reset displayed text when new snippet arrives
     setDisplayedText('');
@@ -18,54 +26,229 @@ export default function CodeEditorOverlay({ codeSnippet, isVisible }: CodeEditor
     if (!codeSnippet) return;
 
     let i = 0;
-    const speed = Math.max(10, 500 / codeSnippet.length); // Type everything in ~500ms
+    let wordCount = 0;
+    // Ajusta la velocidad según la longitud para escribir todo en aproximadamente 500ms
+    const speed = Math.max(8, 450 / codeSnippet.length);
     
     const interval = setInterval(() => {
       setDisplayedText(codeSnippet.substring(0, i + 1));
+      
+      const lastChar = codeSnippet[i];
+      const wordSeparators = [' ', '\n', '\r', '\t', ';', '{', '}', '(', ')', '[', ']', '<', '>', '/', ',', '=', ':', '.'];
+      
+      if (wordSeparators.includes(lastChar)) {
+        const prevChar = i > 0 ? codeSnippet[i - 1] : '';
+        const isPrevSpace = prevChar === ' ' || prevChar === '\t' || prevChar === '\n' || prevChar === '\r';
+        const isCurrentSpace = lastChar === ' ' || lastChar === '\t' || lastChar === '\n' || lastChar === '\r';
+        
+        if (!(isPrevSpace && isCurrentSpace)) {
+          wordCount++;
+          if (wordCount % 4 === 0) {
+            playKeyClick(isCurrentSpace);
+          }
+        }
+      }
+
       i++;
       if (i >= codeSnippet.length) {
         clearInterval(interval);
       }
     }, speed);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+    };
   }, [codeSnippet, isVisible]);
+
+  // Sonido de éxito al terminar
+  useEffect(() => {
+    if (!isVisible) return;
+
+    if (codeSnippet && displayedText === codeSnippet && lastCompletedSnippetRef.current !== codeSnippet) {
+      lastCompletedSnippetRef.current = codeSnippet;
+      playSuccessChime();
+    }
+  }, [displayedText, codeSnippet, isVisible]);
+
+  // Tokenización simple de HTML/JSX para colorear código
+  function tokenizeJSX(line: string) {
+    const regex = /(<\/?[a-zA-Z0-9_]+|className="[^"]*"|text="[^"]*"|src="[^"]*"|\/?>|[{}]|🌿|🍕)/g;
+    const parts = line.split(regex);
+    return parts.map((part, idx) => {
+      if (part.startsWith('<') || part.startsWith('</')) {
+        return <span key={idx} className="text-[#569CD6]">{part}</span>; // Etiqueta HTML
+      }
+      if (part.startsWith('className=') || part.startsWith('text=') || part.startsWith('src=')) {
+        const [attr, val] = part.split('=');
+        return (
+          <span key={idx}>
+            <span className="text-[#9CDCFE]">{attr}</span>
+            <span className="text-[#D4D4D4]">=</span>
+            <span className="text-[#CE9178]">{val}</span>
+          </span>
+        );
+      }
+      if (part === '>' || part === '/>') {
+        return <span key={idx} className="text-[#569CD6]">{part}</span>;
+      }
+      if (part === '🌿' || part === '🍕') {
+        return <span key={idx} className="text-base select-none">{part}</span>;
+      }
+      return <span key={idx} className="text-[#D4D4D4]">{part}</span>;
+    });
+  }
+
+  // Resaltado de sintaxis CSS/HTML dinámico
+  function highlightCode(text: string) {
+    if (!text) return null;
+    const lines = text.split('\n');
+
+    return lines.map((line, lineIdx) => {
+      // Comentarios
+      if (line.trim().startsWith('//') || line.trim().startsWith('/*') || line.trim().endsWith('*/')) {
+        return (
+          <div key={lineIdx} className="text-[#6A9955] min-h-[1.25rem] whitespace-pre">
+            {line}
+          </div>
+        );
+      }
+      
+      // JSX / HTML
+      if (line.includes('<') || line.includes('/>') || line.includes('className=')) {
+        return (
+          <div key={lineIdx} className="text-[#D4D4D4] min-h-[1.25rem] whitespace-pre">
+            {tokenizeJSX(line)}
+          </div>
+        );
+      }
+      
+      // Propiedades CSS standard
+      if (line.includes(':')) {
+        const parts = line.split(':');
+        const prop = parts[0];
+        const val = parts.slice(1).join(':');
+        
+        return (
+          <div key={lineIdx} className="min-h-[1.25rem] whitespace-pre">
+            <span className="text-[#9CDCFE]">{prop}</span>
+            <span className="text-[#D4D4D4]">:</span>
+            <span className="text-[#CE9178]">{val}</span>
+          </div>
+        );
+      }
+      
+      // Selectores CSS / Llaves
+      if (line.includes('{') || line.includes('}')) {
+        const parts = line.split(/({|})/);
+        return (
+          <div key={lineIdx} className="min-h-[1.25rem] whitespace-pre">
+            {parts.map((part, pIdx) => {
+              if (part === '{' || part === '}') {
+                return <span key={pIdx} className="text-[#D4D4D4]">{part}</span>;
+              }
+              return <span key={pIdx} className="text-[#DCDCAA]">{part}</span>;
+            })}
+          </div>
+        );
+      }
+      
+      // Texto normal
+      return (
+        <div key={lineIdx} className="text-[#D4D4D4] min-h-[1.25rem] whitespace-pre">
+          {line}
+        </div>
+      );
+    });
+  }
+
+  const lines = displayedText.split('\n');
+  const totalLinesCount = Math.max(3, lines.length);
 
   return (
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          initial={{ opacity: 0, y: 20, scale: 0.95 }}
+          initial={{ opacity: 0, y: 30, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 10, scale: 0.95 }}
-          transition={{ duration: 0.3 }}
-          className="fixed bottom-6 right-6 z-50 w-80 rounded-lg overflow-hidden shadow-2xl border border-gray-700/50"
-          style={{ backgroundColor: '#1E1E1E' }}
+          exit={{ opacity: 0, y: 20, scale: 0.95 }}
+          transition={{ type: 'spring', stiffness: 220, damping: 24 }}
+          className="fixed bottom-8 right-8 z-50 w-[420px] rounded-xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-gray-800/80 bg-[#1E1E1E]"
         >
-          {/* Editor Header */}
-          <div className="flex items-center px-4 py-2 bg-[#2D2D2D] border-b border-gray-700/50">
-            <div className="flex gap-1.5">
-              <div className="w-2.5 h-2.5 rounded-full bg-[#FF5F56]" />
-              <div className="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]" />
-              <div className="w-2.5 h-2.5 rounded-full bg-[#27C93F]" />
+          {/* Barra superior de pestañas (IDE tabs) */}
+          <div className="flex items-center justify-between bg-[#2D2D2D] border-b border-gray-900 select-none">
+            <div className="flex items-center">
+              {/* Botones de control estilo macOS */}
+              <div className="flex gap-1.5 px-4">
+                <div className="w-3 h-3 rounded-full bg-[#FF5F56]" />
+                <div className="w-3 h-3 rounded-full bg-[#FFBD2E]" />
+                <div className="w-3 h-3 rounded-full bg-[#27C93F]" />
+              </div>
+              
+              {/* Pestañas de archivos */}
+              <div className="flex text-xs font-mono">
+                <div className="px-3.5 py-2.5 bg-gray-800 text-gray-500 border-r border-gray-900 flex items-center gap-1.5">
+                  <span className="text-[10px] text-gray-600">〈/〉</span>
+                  <span>index.html</span>
+                </div>
+                <div className="px-4 py-2.5 bg-[#1E1E1E] text-yellow-500 font-bold border-r border-gray-900 flex items-center gap-1.5 relative">
+                  <span className="text-[10px]">#</span>
+                  <span>styles.css</span>
+                  <div className="absolute top-0 left-0 right-0 h-0.5 bg-yellow-500" />
+                </div>
+                <div className="px-3.5 py-2.5 bg-gray-800 text-gray-500 border-r border-gray-900 flex items-center gap-1.5">
+                  <span className="text-[10px] text-gray-600">⚛</span>
+                  <span>App.tsx</span>
+                </div>
+              </div>
             </div>
-            <div className="mx-auto text-[10px] font-mono text-gray-400 select-none">
-              styles.css
+
+            <div className="pr-4 text-[10px] font-mono text-gray-500">
+              VSC / Timelapse
             </div>
           </div>
           
-          {/* Editor Body */}
-          <div className="p-4 font-mono text-xs text-gray-300 min-h-[100px] whitespace-pre-wrap leading-relaxed">
-            <span className="text-[#569CD6]">.piccolina-hero</span> {'{\n'}
-            <span className="text-[#9CDCFE] pl-4">
-              {displayedText}
+          {/* Cuerpo del Editor */}
+          <div className="flex p-4 font-mono text-xs text-gray-300 min-h-[140px] leading-relaxed relative bg-[#1E1E1E]">
+            {/* Números de línea */}
+            <div className="w-8 select-none text-right pr-3 text-gray-600 border-r border-gray-800/40 flex flex-col">
+              {Array.from({ length: totalLinesCount }).map((_, idx) => (
+                <div key={idx} className="min-h-[1.25rem]">
+                  {String(idx + 1).padStart(2, '0')}
+                </div>
+              ))}
+            </div>
+            
+            {/* Contenido del Código */}
+            <div className="pl-4 flex-1 overflow-x-auto relative">
+              {highlightCode(displayedText)}
+              
+              {/* Cursor de escritura parpadeante */}
               <motion.span
-                animate={{ opacity: [1, 0] }}
-                transition={{ repeat: Infinity, duration: 0.8 }}
-                className="inline-block w-1.5 h-3.5 bg-gray-400 ml-0.5 align-middle"
+                animate={{ opacity: [1, 0, 1] }}
+                transition={{ repeat: Infinity, duration: 0.9, ease: 'easeInOut' }}
+                className="absolute inline-block w-1.5 h-3.5 bg-yellow-500"
+                style={{
+                  left: `${(lines[lines.length - 1]?.length || 0) * 7.25 + 16}px`,
+                  top: `${(lines.length - 1) * 20 + 3}px`
+                }}
               />
-            </span>
-            {'\n}'}
+            </div>
+          </div>
+
+          {/* Barra de estado inferior estilo VS Code */}
+          <div className="flex items-center justify-between px-3 py-1 bg-[#007ACC] text-[10px] text-white select-none font-sans font-medium">
+            <div className="flex items-center gap-2">
+              <span className="text-[8px]">⌥</span>
+              <span>main*</span>
+              <span className="text-blue-200">⟳</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <span>Lín {lines.length}, Col 1</span>
+              <span>Espacios: 2</span>
+              <span>UTF-8</span>
+              <span>CSS</span>
+              <span className="bg-blue-800/50 px-1 rounded">✓ Prettier</span>
+            </div>
           </div>
         </motion.div>
       )}
