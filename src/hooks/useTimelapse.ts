@@ -39,7 +39,7 @@ export function useTimelapse(totalSteps: number, isActive: boolean = true, isAut
         if (s < totalSteps) return s + 1;
         return s;
       });
-    }, 700); // 700ms between steps for more fluid movie mode
+    }, 670); // 670ms between steps for exactly 90s total duration
 
     return () => clearInterval(interval);
   }, [step, isActive, isAutoplay, totalSteps, onComplete]);

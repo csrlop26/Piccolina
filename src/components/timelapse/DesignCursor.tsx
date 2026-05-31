@@ -1,120 +1,141 @@
-import { motion, AnimatePresence } from 'motion/react';
+import { useEffect, useRef } from 'react';
+import { motion, useAnimation } from 'motion/react';
 
 interface DesignCursorProps {
-  x: string;          // CSS position, e.g. '50%', '120px'
-  y: string;          // CSS position
+  x: string;
+  y: string;
   isVisible: boolean;
   isClicking?: boolean;
   isDragging?: boolean;
   label?: string;
+  code?: string;
+  absolute?: boolean;
 }
+
+// Trail: each ghost lags further behind with a softer spring
+const TRAIL = [
+  { stiffness: 72, damping: 17, scale: 0.76, opacity: 0.28 },
+  { stiffness: 46, damping: 15, scale: 0.58, opacity: 0.15 },
+  { stiffness: 28, damping: 13, scale: 0.42, opacity: 0.08 },
+];
 
 export default function DesignCursor({
   x,
   y,
   isVisible,
-  isClicking = false,
-  isDragging = false,
-  label
+  isClicking,
+  isDragging,
+  label,
+  code,
+  absolute,
 }: DesignCursorProps) {
+  const shakeControls = useAnimation();
+  const prevClicking = useRef(isClicking);
+
+  // Shake the cursor the moment isClicking flips to true
+  useEffect(() => {
+    if (isClicking && !prevClicking.current) {
+      shakeControls.start({
+        x: [0, -6, 6, -4, 4, -2, 2, 0],
+        transition: { duration: 0.38, ease: 'easeInOut' },
+      });
+    }
+    prevClicking.current = isClicking;
+  }, [isClicking, shakeControls]);
+
+  if (!isVisible) return null;
+
+  const pos = absolute ? 'absolute' : 'fixed';
+  const fill = isDragging ? '#10b981' : '#1A1A1A';
+
   return (
-    <AnimatePresence>
-      {isVisible && (
+    <>
+      {/* Ghost trail — rendered below main cursor */}
+      {TRAIL.map((cfg, i) => (
         <motion.div
-          className="fixed z-[100] pointer-events-none select-none"
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{
-            opacity: 1,
-            scale: 1,
-            left: x,
-            top: y
-          }}
-          exit={{ opacity: 0, scale: 0.3 }}
-          transition={{
-            left: { type: 'tween', ease: [0.17, 0.67, 0.33, 0.96], duration: 0.8 },
-            top: { type: 'tween', ease: [0.17, 0.67, 0.33, 0.96], duration: 0.85 },
-            opacity: { duration: 0.3 },
-            scale: { duration: 0.2 }
-          }}
+          key={i}
+          className={`${pos} pointer-events-none z-[39]`}
+          animate={{ left: x, top: y }}
+          transition={{ type: 'spring', stiffness: cfg.stiffness, damping: cfg.damping }}
+          style={{ transform: 'translate(-20%, -20%)' }}
         >
-          {/* Cursor SVG — macOS-style arrow */}
-          <motion.svg
-            width="22"
-            height="28"
-            viewBox="0 0 22 28"
+          <svg
+            width={22 * cfg.scale}
+            height={22 * cfg.scale}
+            viewBox="0 0 24 24"
             fill="none"
-            className="drop-shadow-lg"
-            animate={{
-              scale: isClicking ? 0.78 : 1,
-              rotate: isDragging ? -15 : 0
-            }}
-            transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+            style={{ opacity: cfg.opacity }}
           >
-            {/* Shadow */}
-            <path
-              d="M2.5 1.5L2.5 22.5L7.5 17.5L12.5 25.5L16 23.5L11 15.5L18 14.5L2.5 1.5Z"
-              fill="rgba(0,0,0,0.25)"
-              transform="translate(1.5, 1.5)"
-            />
-            {/* White border */}
-            <path
-              d="M2 0.5L2 22L7 17L12 25L15.5 23L10.5 15L17.5 14L2 0.5Z"
-              fill="white"
-              stroke="white"
-              strokeWidth="1.5"
-              strokeLinejoin="round"
-            />
-            {/* Black fill */}
-            <path
-              d="M3 3L3 19.5L7 15.5L11.5 23L13.5 22L9 14L15 13.2L3 3Z"
-              fill="#1a1a1a"
-            />
-          </motion.svg>
+            <path d="M4.5 3V19.5L9.75 14.25H18L4.5 3Z" fill={fill} stroke="#ffffff" strokeWidth="1.5" />
+          </svg>
+        </motion.div>
+      ))}
 
-          {/* Click ripple effect */}
-          <AnimatePresence>
-            {isClicking && (
-              <motion.div
-                className="absolute top-0 left-0"
-                initial={{ scale: 0, opacity: 0.7 }}
-                animate={{ scale: 2.5, opacity: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.4, ease: 'easeOut' }}
-              >
-                <div className="w-5 h-5 rounded-full border-2 border-sky-400 bg-sky-400/20" />
-              </motion.div>
-            )}
-          </AnimatePresence>
+      {/* Main cursor */}
+      <motion.div
+        className={`${pos} pointer-events-none z-40 flex flex-col items-start gap-1.5`}
+        animate={{ left: x, top: y }}
+        transition={{ type: 'spring', stiffness: 155, damping: 14, mass: 0.9 }}
+        style={{ transform: 'translate(-20%, -20%)' }}
+      >
+        {/* Cursor body — wraps in shake controls */}
+        <motion.div animate={shakeControls} className="relative">
+          <svg
+            width="22"
+            height="22"
+            viewBox="0 0 24 24"
+            fill="none"
+            className="drop-shadow-[0_3px_6px_rgba(0,0,0,0.35)]"
+          >
+            <path d="M4.5 3V19.5L9.75 14.25H18L4.5 3Z" fill={fill} stroke="#ffffff" strokeWidth="1.5" />
+          </svg>
 
-          {/* Drag indicator */}
+          {/* Click ripple */}
+          {isClicking && (
+            <motion.div
+              initial={{ scale: 0.5, opacity: 0.9 }}
+              animate={{ scale: 2.4, opacity: 0 }}
+              transition={{ duration: 0.42 }}
+              className="absolute -top-1 -left-1 w-6 h-6 border-2 border-amber-400 rounded-full"
+            />
+          )}
+
+          {/* Drag pulse ring */}
           {isDragging && (
             <motion.div
-              className="absolute -top-1 -left-1"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              animate={{ scale: [1, 1.65, 1], opacity: [0.45, 0, 0.45] }}
+              transition={{ duration: 1.1, repeat: Infinity, ease: 'easeInOut' }}
+              className="absolute -top-1 -left-1 w-6 h-6 border border-emerald-400 rounded-full"
+            />
+          )}
+        </motion.div>
+
+        {/* Tooltip label */}
+        <div className="flex flex-col items-start gap-1 select-none">
+          {label && (
+            <motion.div
+              key={label}
+              initial={{ opacity: 0, x: -4 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.2 }}
+              className="bg-zinc-900 text-white font-mono text-[8px] px-1.5 py-0.5 rounded border border-zinc-700 shadow-md"
             >
-              <div className="w-3 h-3 rounded-full bg-sky-500 animate-pulse" />
+              {label}
             </motion.div>
           )}
 
-          {/* Floating label */}
-          <AnimatePresence>
-            {label && (
-              <motion.div
-                className="absolute left-6 top-5 whitespace-nowrap"
-                initial={{ opacity: 0, x: -5, y: 3 }}
-                animate={{ opacity: 1, x: 0, y: 0 }}
-                exit={{ opacity: 0, x: -5 }}
-                transition={{ duration: 0.2 }}
-              >
-                <div className="bg-gray-900/90 backdrop-blur-sm text-white text-[10px] font-mono font-medium px-2 py-1 rounded shadow-lg border border-gray-700/50">
-                  {label}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.div>
-      )}
-    </AnimatePresence>
+          {code && (
+            <div className="bg-[#181817]/95 border border-zinc-800/80 rounded-md shadow-[0_10px_25px_rgba(0,0,0,0.5)] p-2 font-mono text-[8px] leading-relaxed text-zinc-300 backdrop-blur-sm max-w-[190px] whitespace-pre overflow-hidden">
+              <div className="flex gap-1 mb-1 border-b border-zinc-800/40 pb-1">
+                <span className="w-1 h-1 rounded-full bg-[#FF5F56]" />
+                <span className="w-1 h-1 rounded-full bg-[#FFBD2E]" />
+                <span className="w-1 h-1 rounded-full bg-[#27C93F]" />
+              </div>
+              <code className="text-sky-300 block">{code}</code>
+            </div>
+          )}
+        </div>
+      </motion.div>
+    </>
   );
 }

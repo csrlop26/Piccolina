@@ -16,8 +16,8 @@ export default function Navigation({ onCartOpen, cartCount, onReserveClick }: Na
 
         {/* Logo */}
         <a href="#" className="font-display text-xs font-black text-on-surface uppercase tracking-tight select-none flex items-center gap-2.5">
-          <span className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white text-[9px] font-black tracking-tight leading-none">LP</span>
-          La Piccolina
+          <span className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white text-[9px] font-black tracking-tight leading-none">LT</span>
+          La Trattoria
         </a>
 
         {/* Desktop nav pills */}

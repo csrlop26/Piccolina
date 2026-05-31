@@ -18,7 +18,7 @@ const PROMO_TEXTS = [
 const REVIEWS = [
   { id: 1, author: "Mateo R.", text: "La mejor masa madre que he probado en Barcelona. El borde inflado y quemadito es espectacular." },
   { id: 2, author: "Laura G.", text: "Auténtico sabor a leña. Ingredientes de primerísima calidad." },
-  { id: 3, author: "Carlos M.", text: "Local pequeñito pero con un encanto brutal. La pizza Piccolina es obligatoria." }
+  { id: 3, author: "Carlos M.", text: "Local pequeñito pero con un encanto brutal. La pizza Trattoria es obligatoria." }
 ];
 
 export default function TimelapsePromosReviews({ isActive, isAutoplay, onComplete }: { isActive?: boolean, isAutoplay?: boolean, onComplete?: () => void }) {

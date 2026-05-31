@@ -112,7 +112,7 @@ export default function App() {
     total: number;
     items: CartItem[];
   }) => {
-    const orderId = `LPC-${Math.floor(10000 + Math.random() * 90000)}`;
+    const orderId = `LTR-${Math.floor(10000 + Math.random() * 90000)}`;
     setActiveReceipt({
       id: orderId,
       ...details
@@ -167,7 +167,7 @@ export default function App() {
                 paintOrder: 'stroke fill',
               }}
             >
-              PICCOLI<span style={{ color: '#ffffff', WebkitTextStroke: '2px #c94028', paintOrder: 'stroke fill' }}>N</span>A
+              TRATTOR<span style={{ color: '#ffffff', WebkitTextStroke: '2px #c94028', paintOrder: 'stroke fill' }}>I</span>A
             </h1>
           </motion.div>
 
@@ -552,7 +552,7 @@ export default function App() {
               COMPARTE SIN PRISAS
             </h2>
             <p className="font-sans text-sm md:text-base text-background opacity-90 font-medium leading-relaxed max-w-lg">
-              Reserva un espacio comunitario en nuestra icónica mesa cooperativa. En La Piccolina el tiempo se ralentiza en el instante en que tu pizza toca la madera de la mesa. Disfruta con amigos, extraños y masa madre.
+              Reserva un espacio comunitario en nuestra icónica mesa cooperativa. En La Trattoria el tiempo se ralentiza en el instante en que tu pizza toca la madera de la mesa. Disfruta con amigos, extraños y masa madre.
             </p>
             <button
               onClick={() => openReservation('cooperativa')}
@@ -691,7 +691,7 @@ export default function App() {
                 <div className="text-center">
                   <span className="text-primary font-mono text-xs tracking-widest uppercase">[ NUESTRO COMPROMISO ]</span>
                   <h3 className="font-display font-black text-2xl md:text-3xl uppercase text-on-surface mt-1">
-                    EL MANIFIESTO PICCOLINA
+                    EL MANIFIESTO TRATTORIA
                   </h3>
                 </div>
 
@@ -761,7 +761,7 @@ export default function App() {
               {/* Physical style receipt print block summary */}
               <div className="w-full bg-surface-lowest p-4 border border-on-surface/50 font-mono text-xs space-y-3 relative mb-6">
                 <div className="text-center pb-2 border-b border-dashed border-on-surface/20">
-                  <p className="font-display font-black text-xs uppercase text-on-surface">LA PICCOLINA S.L.</p>
+                  <p className="font-display font-black text-xs uppercase text-on-surface">LA TRATTORIA S.L.</p>
                   <p className="text-[10px] text-on-surface-variant">BARCELONA • PEDIDO Nº {activeReceipt.id}</p>
                 </div>
 
@@ -854,7 +854,7 @@ export default function App() {
                   <h3 className="font-display font-black text-xl uppercase text-on-surface">
                     ¿CÓMO LLEGAR?
                   </h3>
-                  <p className="text-xs text-on-surface-variant mt-1">La Piccolina • Born, Barcelona</p>
+                  <p className="text-xs text-on-surface-variant mt-1">La Trattoria • Born, Barcelona</p>
                 </div>
 
                 {/* Simulated Stylized Brutalist Vector Map representation */}
@@ -869,7 +869,7 @@ export default function App() {
                   {/* Floating marker pin */}
                   <div className="relative z-10 text-center animate-bounce">
                     <span className="inline-block bg-primary text-white text-[9px] font-black font-sans px-2 py-1 rounded brutalist-border whitespace-nowrap">
-                      🍕 LA PICCOLINA
+                      🍕 LA TRATTORIA
                     </span>
                     <div className="w-2 h-2 bg-on-surface rounded-full mx-auto mt-0.5" />
                   </div>

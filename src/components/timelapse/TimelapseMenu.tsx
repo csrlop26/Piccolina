@@ -4,6 +4,7 @@ import { PIZZA_MENU } from '../../data';
 import { Flame, Maximize2, Plus, Minus, ShoppingBag } from 'lucide-react';
 import CodeEditorOverlay from './CodeEditorOverlay';
 import TypewriterText from './TypewriterText';
+import ScrambleText from './ScrambleText';
 import ConstructionBox from './ConstructionBox';
 import DesignCursor from './DesignCursor';
 import SelectionHandles from './SelectionHandles';
@@ -119,7 +120,10 @@ export default function TimelapseMenu({ isActive, isAutoplay, onComplete }: { is
             <h2 className={`transition-all duration-1000 ${
               step >= 2 ? 'font-display font-extrabold text-3xl md:text-4xl text-on-surface tracking-tight uppercase' : 'font-serif font-normal text-2xl text-gray-400 tracking-normal capitalize'
             }`}>
-              {step >= 2 ? <TypewriterText text="NUESTRAS ESPECIALIDADES" speed={20} /> : 'Nuestras especialidades de masa madre'}
+              {step >= 2
+                ? <ScrambleText text="NUESTRAS ESPECIALIDADES" scrambleDuration={120} speed={25} />
+                : 'Nuestras especialidades de masa madre'
+              }
             </h2>
           </div>
           <p className="font-mono text-xs font-bold text-center sm:text-right tracking-wider text-on-surface-variant">

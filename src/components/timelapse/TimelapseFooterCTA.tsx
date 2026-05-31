@@ -4,6 +4,7 @@ import { IMAGES_RESOURCES } from '../../data';
 import { MapPin, Clock, Instagram, Sparkles } from 'lucide-react';
 import CodeEditorOverlay from './CodeEditorOverlay';
 import TypewriterText from './TypewriterText';
+import ScrambleText from './ScrambleText';
 import ConstructionBox from './ConstructionBox';
 import DesignCursor from './DesignCursor';
 import ColorSwatchPicker from './ColorSwatchPicker';
@@ -114,7 +115,9 @@ export default function TimelapseFooterCTA({ isActive, isAutoplay, onComplete }:
             step >= 4 ? 'font-display font-black text-5xl md:text-7xl uppercase text-on-surface' : 'font-serif font-normal text-3xl text-gray-500 capitalize'
           }`}>
             {step >= 3 ? (
-              <TypewriterText text={step >= 4 ? 'VEN A PROBARLA' : 'Ven a visitarnos al Born'} speed={25} />
+              step >= 4
+                ? <ScrambleText text="VEN A PROBARLA" scrambleDuration={130} speed={28} />
+                : <TypewriterText text="Ven a visitarnos al Born" speed={25} />
             ) : ''}
           </h2>
           
@@ -198,10 +201,10 @@ export default function TimelapseFooterCTA({ isActive, isAutoplay, onComplete }:
             {/* Col 1 */}
             <div className="space-y-4">
               <h2 className="font-display text-3xl font-black text-primary uppercase tracking-tight">
-                <TypewriterText text="La Piccolina" speed={25} />
+                <TypewriterText text="La Trattoria" speed={25} />
               </h2>
               <p className="font-sans text-sm text-surface-container-highest/70 leading-relaxed max-w-xs">
-                © {new Date().getFullYear()} La Piccolina Artisanal Pizzeria. Hecho con pasión, harina orgánica y fermentación lenta.
+                © {new Date().getFullYear()} La Trattoria Artisanal Pizzeria. Hecho con pasión, harina orgánica y fermentación lenta.
               </p>
               <div className="pt-2 flex items-center gap-1.5 text-xs text-secondary-container font-mono">
                 <span>Diseñado por <a href="https://augustocs.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-white transition-colors font-medium">AugustoCS</a></span>

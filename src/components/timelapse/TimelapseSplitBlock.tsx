@@ -169,7 +169,7 @@ export default function TimelapseSplitBlock({ isActive, isAutoplay, onComplete }
                 }`}>
                   {step >= 6 ? (
                     <TypewriterText 
-                      text="Reserva un espacio comunitario en nuestra icónica mesa cooperativa. En La Piccolina el tiempo se ralentiza en el instante en que tu pizza toca la madera de la mesa. Disfruta con amigos, extraños y masa madre." 
+                      text="Reserva un espacio comunitario en nuestra icónica mesa cooperativa. En La Trattoria el tiempo se ralentiza en el instante en que tu pizza toca la madera de la mesa. Disfruta con amigos, extraños y masa madre." 
                       speed={8} 
                     />
                   ) : ''}

@@ -7,10 +7,10 @@ export default function Footer() {
         {/* Col 1 */}
         <div className="space-y-4">
           <h2 className="font-display text-3xl font-black text-primary uppercase tracking-tight">
-            La Piccolina
+            La Trattoria
           </h2>
           <p className="font-sans text-sm text-surface-container-highest/70 leading-relaxed max-w-xs">
-            © {new Date().getFullYear()} La Piccolina Artisanal Pizzeria. Hecho con pasión, harina orgánica y fermentación lenta.
+            © {new Date().getFullYear()} La Trattoria Artisanal Pizzeria. Hecho con pasión, harina orgánica y fermentación lenta.
           </p>
           <div className="pt-2 flex items-center gap-1.5 text-xs text-secondary-container font-mono">
             <span>Diseñado por <a href="https://augustocs.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-white transition-colors">AugustoCS</a></span>

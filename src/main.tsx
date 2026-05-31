@@ -5,13 +5,19 @@ import './index.css';
 
 import TimelapseHero from './components/timelapse/TimelapseHero.tsx';
 import TimelapseMenu from './components/timelapse/TimelapseMenu.tsx';
-
 import TimelapseStoria from './components/timelapse/TimelapseStoria.tsx';
 import TimelapseFull from './components/timelapse/TimelapseFull.tsx';
+import TimelapseReelView from './components/timelapse/TimelapseReelView.tsx';
 
 const root = createRoot(document.getElementById('root')!);
 
-if (window.location.pathname === '/record/full' || window.location.pathname === '/record') {
+if (new URLSearchParams(window.location.search).has('timelapse')) {
+  root.render(
+    <StrictMode>
+      <TimelapseReelView />
+    </StrictMode>,
+  );
+} else if (window.location.pathname === '/record/full' || window.location.pathname === '/record') {
   root.render(
     <StrictMode>
       <TimelapseFull />

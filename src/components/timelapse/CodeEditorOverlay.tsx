@@ -26,37 +26,38 @@ export default function CodeEditorOverlay({ codeSnippet, isVisible }: CodeEditor
     if (!codeSnippet) return;
 
     let i = 0;
-    let wordCount = 0;
-    // Ajusta la velocidad según la longitud para escribir todo en aproximadamente 500ms
-    const speed = Math.max(8, 450 / codeSnippet.length);
-    
-    const interval = setInterval(() => {
+    let timeoutId: NodeJS.Timeout;
+
+    function typeNext() {
+      if (!isVisible) return;
+      if (i >= codeSnippet.length) return;
+
       setDisplayedText(codeSnippet.substring(0, i + 1));
-      
-      const lastChar = codeSnippet[i];
-      const wordSeparators = [' ', '\n', '\r', '\t', ';', '{', '}', '(', ')', '[', ']', '<', '>', '/', ',', '=', ':', '.'];
-      
-      if (wordSeparators.includes(lastChar)) {
-        const prevChar = i > 0 ? codeSnippet[i - 1] : '';
-        const isPrevSpace = prevChar === ' ' || prevChar === '\t' || prevChar === '\n' || prevChar === '\r';
-        const isCurrentSpace = lastChar === ' ' || lastChar === '\t' || lastChar === '\n' || lastChar === '\r';
-        
-        if (!(isPrevSpace && isCurrentSpace)) {
-          wordCount++;
-          if (wordCount % 4 === 0) {
-            playKeyClick(isCurrentSpace);
-          }
-        }
+
+      const char = codeSnippet[i];
+      const isPauseChar = char === ' ' || char === '\n' || char === ';' || char === '{' || char === '}';
+
+      // Reproducir sonido. 15% de probabilidad en letras normales, 100% en pausas.
+      const shouldSound = isPauseChar || Math.random() < 0.15;
+      if (shouldSound) {
+        playKeyClick(isPauseChar);
       }
 
       i++;
-      if (i >= codeSnippet.length) {
-        clearInterval(interval);
+
+      // Retrasos: rápido para código normal (8-16ms), pausa para separadores (80-140ms)
+      let nextDelay = 8 + Math.random() * 8;
+      if (isPauseChar) {
+        nextDelay = char === '\n' ? 180 : 80;
       }
-    }, speed);
+
+      timeoutId = setTimeout(typeNext, nextDelay);
+    }
+
+    typeNext();
 
     return () => {
-      clearInterval(interval);
+      clearTimeout(timeoutId);
     };
   }, [codeSnippet, isVisible]);
 

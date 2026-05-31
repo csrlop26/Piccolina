@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { useTimelapse } from '../../hooks/useTimelapse';
 import { IMAGES_RESOURCES } from '../../data';
@@ -6,9 +7,14 @@ import DesignCursor from './DesignCursor';
 import ColorSwatchPicker from './ColorSwatchPicker';
 import SelectionHandles from './SelectionHandles';
 import TypewriterText from './TypewriterText';
+import ScrambleText from './ScrambleText';
 
 export default function TimelapseHero({ isActive, isAutoplay, onComplete }: { isActive?: boolean, isAutoplay?: boolean, onComplete?: () => void }) {
   const step = useTimelapse(15, isActive ?? true, isAutoplay ?? false, onComplete);
+
+  // Once ScrambleText resolves "TRATTORIA", switch to the styled version with coloured N
+  const [titleResolved, setTitleResolved] = useState(false);
+  useEffect(() => { if (step < 3) setTitleResolved(false); }, [step]);
 
   // --- Design Cursor choreography ---
   const getCursorState = (s: number) => {
@@ -117,7 +123,7 @@ export default function TimelapseHero({ isActive, isAutoplay, onComplete }: { is
           </svg>
         )}
 
-        {/* BACKGROUND TEXT: Huge bold "PICCOLINA" perfectly centered */}
+        {/* BACKGROUND TEXT: Huge bold "TRATTORIA" perfectly centered */}
         <motion.div
           className="absolute inset-0 flex items-center justify-center select-none pointer-events-none z-30"
           initial={{ opacity: 0, scale: 0.7 }}
@@ -152,24 +158,35 @@ export default function TimelapseHero({ isActive, isAutoplay, onComplete }: { is
             )}
             <h1
               className={`font-black text-on-surface leading-[0.88] transition-all duration-1000 ${
-                step >= 3 ? 'font-display uppercase tracking-tighter' : 'font-serif tracking-normal capitalize text-gray-500'
+                step >= 3 ? 'font-display uppercase' : 'font-serif tracking-normal capitalize text-gray-500'
               }`}
               style={{
                 fontSize: step >= 3 ? 'clamp(46px, 13.5vw, 200px)' : 'clamp(28px, 6vw, 75px)',
-                letterSpacing: step >= 3 ? '-0.05em' : '0.1em',
+                // Letter-spacing collapses as the title resolves: wide → tight
+                letterSpacing: titleResolved ? '-0.05em' : (step >= 3 ? '0.18em' : '0.1em'),
+                transition: 'letter-spacing 0.9s cubic-bezier(0.22,1,0.36,1), font-size 1s, color 1s',
                 ...(step >= 3 ? { WebkitTextStroke: '1px rgba(0,0,0,0.28)', paintOrder: 'stroke fill' } : {}),
               }}
             >
               {step >= 3 ? (
-                <>
-                  <TypewriterText text="PICCOLI" speed={25} />
-                  <span style={step >= 4 ? { color: '#ffffff', WebkitTextStroke: '2px #c94028', paintOrder: 'stroke fill' } : {}}>
-                    <TypewriterText text="N" speed={25} delay={175} />
-                  </span>
-                  <TypewriterText text="A" speed={25} delay={200} />
-                </>
+                titleResolved ? (
+                  // Final styled version with coloured N
+                  <>
+                    TRATTOR
+                    <span style={{ color: '#ffffff', WebkitTextStroke: '2px #c94028', paintOrder: 'stroke fill' }}>I</span>
+                    A
+                  </>
+                ) : (
+                  // Scramble phase
+                  <ScrambleText
+                    text="TRATTORIA"
+                    scrambleDuration={160}
+                    speed={28}
+                    onComplete={() => setTitleResolved(true)}
+                  />
+                )
               ) : (
-                step >= 2 ? <TypewriterText text="La Piccolina Restaurant" speed={20} /> : ""
+                step >= 2 ? <TypewriterText text="La Trattoria Restaurant" speed={20} /> : ""
               )}
             </h1>
           </div>
@@ -394,13 +411,16 @@ export default function TimelapseHero({ isActive, isAutoplay, onComplete }: { is
               )}
             </motion.div>
 
-            {/* Pizza */}
+            {/* Pizza — outer Ken Burns wrapper (slow zoom once settled) */}
             <motion.div
               className="relative z-10 select-none"
-              style={{
-                width: 'clamp(280px, 54vw, 700px)', // Slightly smaller than circle
-                height: 'clamp(280px, 54vw, 700px)',
-              }}
+              style={{ width: 'clamp(280px, 54vw, 700px)', height: 'clamp(280px, 54vw, 700px)' }}
+              animate={{ scale: step >= 13 ? 1.09 : 1 }}
+              transition={{ duration: 20, ease: 'easeInOut' }}
+            >
+            {/* Pizza — entrance spring animation */}
+            <motion.div
+              className="absolute inset-0 select-none"
               initial={{ opacity: 0, y: -800, scale: 0 }}
               animate={{
                 opacity: step >= 11 ? 1 : 0,
@@ -442,6 +462,7 @@ export default function TimelapseHero({ isActive, isAutoplay, onComplete }: { is
                 referrerPolicy="no-referrer"
               />
             </motion.div>
+            </motion.div>{/* /Ken Burns outer */}
           </div>
         </div>
 

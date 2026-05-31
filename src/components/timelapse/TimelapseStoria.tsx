@@ -4,6 +4,7 @@ import { IMAGES_RESOURCES } from '../../data';
 import { BookOpen, X } from 'lucide-react';
 import CodeEditorOverlay from './CodeEditorOverlay';
 import TypewriterText from './TypewriterText';
+import ScrambleText from './ScrambleText';
 import ConstructionBox from './ConstructionBox';
 import DesignCursor from './DesignCursor';
 import SelectionHandles from './SelectionHandles';
@@ -50,7 +51,7 @@ export default function TimelapseStoria({ isActive, isAutoplay, onComplete }: { 
       case 14: return "// Simulating User Click...\ndocument.getElementById('btn').click();";
       case 15: return "/* Open Manifesto Modal */\n<div className=\"modal-overlay\" />";
       case 16: return "/* Render Modal Box */\n<div className=\"modal-content\" />\nbackground: white;";
-      case 17: return "/* Add Header */\n<h3>EL MANIFIESTO PICCOLINA</h3>\nfont-family: 'Playfair Display';";
+      case 17: return "/* Add Header */\n<h3>EL MANIFIESTO TRATTORIA</h3>\nfont-family: 'Playfair Display';";
       case 18: return "/* Load manifesto text */\n<p>01. LA CORTEZA...</p>\nfont-family: monospace;";
       case 19: return "/* Add close button */\n<button className=\"btn-close\">Entendido</button>\nbackground: #e8563a;";
       case 20: return "/* Modal Complete */\nconsole.log('Manifesto ready');";
@@ -139,7 +140,9 @@ export default function TimelapseStoria({ isActive, isAutoplay, onComplete }: { 
                   step >= 4 ? 'font-display font-extrabold text-3xl md:text-5xl uppercase tracking-tight text-on-surface' : 'font-serif font-normal text-2xl text-gray-500 capitalize'
                 }`}>
                   {step >= 3 ? (
-                    <TypewriterText text={step >= 4 ? 'NUESTRA HISTORIA' : 'La historia de la pizzería'} speed={25} />
+                    step >= 4
+                      ? <ScrambleText text="NUESTRA HISTORIA" scrambleDuration={140} speed={30} />
+                      : <TypewriterText text="La historia de la pizzería" speed={25} />
                   ) : ''}
                 </h2>
                 
@@ -308,7 +311,7 @@ export default function TimelapseStoria({ isActive, isAutoplay, onComplete }: { 
                         <h3 className={`text-on-surface mt-1 transition-all duration-1000 ${
                           step >= 17 ? 'font-display font-black text-2xl md:text-3xl uppercase' : 'font-serif font-normal text-xl capitalize text-gray-500'
                         }`}>
-                          {step >= 17 ? <TypewriterText text="EL MANIFIESTO PICCOLINA" speed={20} /> : 'Nuestro manifiesto artesano'}
+                          {step >= 17 ? <TypewriterText text="EL MANIFIESTO TRATTORIA" speed={20} /> : 'Nuestro manifiesto artesano'}
                         </h3>
                       </div>
 

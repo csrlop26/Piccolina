@@ -1,9 +1,9 @@
-# La Piccolina - Contexto del Proyecto
+# La Trattoria - Contexto del Proyecto
 
-Este archivo documenta el estado actual, la arquitectura y las decisiones de diseño del proyecto "La Piccolina" para futuras interacciones con asistentes de IA.
+Este archivo documenta el estado actual, la arquitectura y las decisiones de diseño del proyecto "La Trattoria" para futuras interacciones con asistentes de IA.
 
 ## 1. Resumen del Proyecto
-- **Nombre:** La Piccolina
+- **Nombre:** La Trattoria
 - **Descripción:** Demo de una pizzería artesanal enfocada en masa madre, horno de leña y estética moderna.
 - **Repositorio:** [https://github.com/csrlop26/Piccolina](https://github.com/csrlop26/Piccolina)
 - **URL en Producción:** [https://csrlop26.github.io/Piccolina/](https://csrlop26.github.io/Piccolina/)

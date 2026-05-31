@@ -54,7 +54,7 @@ export default function ReservationModal({ isOpen, onClose, defaultArea = 'gener
     setErrors({});
     
     // Generate simple booking confirmation code
-    const randomCode = `PIC-${Math.floor(100000 + Math.random() * 900000)}`;
+    const randomCode = `TRA-${Math.floor(100000 + Math.random() * 900000)}`;
     setBookingCode(randomCode);
     setStep('success');
   };
@@ -261,17 +261,17 @@ export default function ReservationModal({ isOpen, onClose, defaultArea = 'gener
               <div className="space-y-1">
                 <h4 className="font-display font-black text-2xl text-on-surface uppercase tracking-tight">¡Reserva Confirmada!</h4>
                 <p className="text-sm text-on-surface-variant max-w-sm">
-                  Hemos enviado los detalles y dirección de acceso a tu correo electrónico. Te esperamos en La Piccolina.
+                  Hemos enviado los detalles y dirección de acceso a tu correo electrónico. Te esperamos en La Trattoria.
                 </p>
               </div>
-
+ 
               {/* Graphic Ticket Receipt Layout */}
               <div className="relative w-full max-w-sm bg-background border-2 border-on-surface/60 p-5 rounded-none shadow-md overflow-hidden text-left font-mono text-xs text-on-surface">
                 {/* Sideway decorative notches to mimic receipt tear-off */}
                 <div className="absolute top-0 inset-x-0 h-1 bg-[radial-gradient(circle,transparent_4px,white_4px)] bg-[length:12px_12px]" />
                 
                 <div className="text-center pb-3 border-b border-dashed border-on-surface/30">
-                  <p className="font-display font-black text-sm uppercase">LA PICCOLINA PIZZERIA</p>
+                  <p className="font-display font-black text-sm uppercase">LA TRATTORIA PIZZERIA</p>
                   <p className="text-[10px] text-on-surface-variant">BARCELONA • VIA DELLA CONCILIAZIONE 12</p>
                 </div>
 
